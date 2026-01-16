@@ -404,7 +404,6 @@
                         <option value="presentation">Présentation</option>
                         <option value="magasin">Au magasin</option>
                         <option value="dentiste">Chez le dentiste</option>
-                        <option value="banque">Banque d'investissement</option>
                         <option value="voyage">Voyage & Transport</option>
                         <option value="sante">Santé & Docteur</option>
                         <option value="loisirs">Loisirs & Hobbies</option>
@@ -412,18 +411,13 @@
                         <option value="travail">Travail & Bureau</option>
                         <option value="famille">Famille & Amis</option>
                         <option value="culture">Culture & Société</option>
+                        <option value="animaux">Animaux & Domestiques</option>
                     </select>
                 </div>
 
                 <button class="btn btn-primary" id="generateBtn">
                     ✨ Générer Dialogue
                 </button>
-                <div id="voice-warning"
-                    style="display:none; color: #ffeb3b; background: rgba(0,0,0,0.15); padding: 10px; border-radius: 8px; font-size: 0.85rem; margin-top: 12px; border: 1px solid #ffeb3b; line-height: 1.4;">
-                    ⚠️ La voix <span id="missing-lang-name"></span> n'est pas installée sur cet appareil. <br>
-                    <div style="margin-top:5px; opacity: 0.9;">Allez dans <b>Paramètres</b> et cherchez <b>"Synthèse
-                            vocale"</b> pour installer le pack de langue.</div>
-                </div>
             </div>
         </div>
 
@@ -616,15 +610,16 @@
                     'ja-JP': ["歯が痛いです。", "ひどいですか？", "予約をしたいです。", "口を開けてください。", "口をゆすいでください。", "歯医者が怖いです。", "この歯が痛みます。", "抜歯が必要ですか？", "クリーニングをお願いします。", "予約は何時ですか？"]
                 }
             },
-            banque: {
-                A2: {
-                    fr: ["Je voudrais ouvrir un compte.", "Quel est le taux d'intérêt?", "Je veux faire un virement.", "Avez-vous des conseils d'investissement?", "Où est le distributeur?", "J'ai perdu ma carte bancaire.", "Mon solde est insuffisant.", "Je voudrais changer de l'argent.", "C'est quoi votre commission?", "Puis-je avoir un prêt?"],
-                    'el-GR': ["Θα ήθελα να ανοίξω έναν λογαριασμό.", "Ποιο είναι το επιτόκιο;", "Θέλω να κάνω μια μεταφορά.", "Έχετε επενδυτικές συμβουλές;", "Πού είναι το ΑΤΜ;", "Έχασα την τραπεζική μου κάρτα.", "Το υπόλοιπό μου δεν είναι αρκετό.", "Θα ήθελα να αλλάξω χρήματα.", "Ποια είναι η προμήθειά σας;", "Μπορώ να πάρω ένα δάνειο;"],
-                    'es-ES': ["Me gustaría abrir una cuenta.", "¿Cuál es la tasa de interés?", "Quiero hacer una transferencia.", "¿Tiene consejos de inversión?", "¿Dónde está el cajero?", "He perdido mi tarjeta bancaria.", "Mi saldo es insuficiente.", "Quisiera cambiar dinero.", "¿Cuál es su comisión?", "¿Puedo tener un préstamo?"],
-                    'de-DE': ["Ich möchte ein Konto eröffnen.", "Wie hoch ist der Zinssatz?", "Ich möchte eine Überweisung machen.", "Haben Sie Anlagetipps?", "Wo ist der Geldautomat?", "Ich habe meine Bankkarte verloren.", "Mein Kontostand ist unzureichend.", "Ich möchte Geld wechseln.", "Wie hoch ist Ihre Provision?", "Kann ich einen Kredit bekommen?"],
-                    'it-IT': ["Vorrei aprire un conto.", "Qual è il tasso di interesse?", "Voglio fare un bonifico.", "Ha dei consigli di investimento?", "Dov'è il bancomat?", "Ho perso la mia carta bancaria.", "Il mio saldo è insufficiente.", "Vorrei cambiare dei soldi.", "Qual è la vostra commissione?", "Posso avere un prestito?"],
-                    'pt-PT': ["Gostaria de abrir uma conta.", "Qual é a taxa de juro?", "Quero fazer uma transferência.", "Tem conselhos de investimento?", "Onde fica o multibanco?", "Perdi o meu cartão bancário.", "O meu saldo é insuficiente.", "Gostaria de trocar dinheiro.", "Qual é a vossa comissão?", "Posso ter um empréstimo?"],
-                    'ja-JP': ["口座を開設したいです。", "利率はいくらですか？", "振込をしたいです。", "投資のアドバイスはありますか？", "ATMはどこですか？", "キャッシュカードをなくしました。", "残高が足りません。", "両替をしたいです。", "手数料はいくらですか？", "ローンを組めますか？"]
+            animaux: {
+                A1: {
+                    fr: ["J'ai un chien.", "Mon chat est noir.", "Le cheval est grand.", "Où est le lapin?", "Le poisson nage.", "J'aime les oiseaux.", "C'est un petit hamster.", "Le lion est fort.", "L'éléphant est gris.", "La tortue est lente."],
+                    'el-GR': ["Έχω έναν σκύλο.", "Ο γάτος μου είναι μαύρος.", "Το άλογο είναι μεγάλο.", "Πού είναι το κουνέλι;", "Το ψάρι κολυμπάει.", "Μου αρέσουν τα πουλιά.", "Είναι ένα μικρό χάμστερ.", "Το λιοντάρι είναι δυνατό.", "Ο ελέφαντας είναι γκρι.", "Η χελώνα είναι αργή."],
+                    'roman-el-GR': ["Écho énan skýlo.", "O gátos mou eínai mávros.", "To álogo eínai megálo.", "Poú eínai to kounéli?", "To psári kolympáei.", "Mou arésoun ta pouliá.", "Eínai éna mikró chámster.", "To liontári eínai dynató.", "O eléfantas eínai nkri.", "I chelóna eínai argí."],
+                    'es-ES': ["Tengo un perro.", "Mi gato es negro.", "El caballo es grande.", "¿Dónde está el conejo?", "El pez nada.", "Me gustan los pájaros.", "Es un hámster pequeño.", "El león es fuerte.", "El elefante es gris.", "La tortuga es lenta."],
+                    'de-DE': ["Ich habe einen Hund.", "Meine Katze ist schwarz.", "Das Pferd ist groß.", "Wo ist das Kaninchen?", "Der Fisch schwimmt.", "Ich mag Vögel.", "Es ist ein kleiner Hamster.", "Der Löwe ist stark.", "Der Elefant ist grau.", "Die Schildkröte ist langsam."],
+                    'it-IT': ["Ho un cane.", "Il mio gatto è nero.", "Il cavallo è grande.", "Dov'è il coniglio?", "Il pesce nuota.", "Mi piacciono gli uccelli.", "È un piccolo criceto.", "Il leone è forte.", "L'elefante è grigio.", "La tartaruga è lenta."],
+                    'pt-PT': ["Tenho um cão.", "O meu gato é preto.", "O cavalo é grande.", "Onde está o coelho?", "O peixe nada.", "Gosto de pássaros.", "É um hamster pequeno.", "O leão é forte.", "O elefante é cinzento.", "A tartaruga é lenta."],
+                    'ja-JP': ["犬を飼っています。", "私の猫は黒いです。", "馬は大きいです。", "ウサギはどこですか？", "魚が泳いでいます。", "鳥が好きです。", "小さなハムスターです。", "ライオンは強いです。", "象は灰色です。", "カメは遅いです。"]
                 }
             },
             culture: {
@@ -678,8 +673,6 @@
             correctionDivider: document.getElementById('correctionDivider'),
             correctCount: document.getElementById('correctCount'),
             totalCount: document.getElementById('totalCount'),
-            voiceWarning: document.getElementById('voice-warning'),
-            missingLangName: document.getElementById('missing-lang-name'),
             phoneticDialogue: document.getElementById('phoneticDialogue')
         };
 
@@ -805,7 +798,6 @@
             els.transcript.innerHTML = '<span class="transcript-empty">Aucun enregistrement</span>';
             els.correctionContainer.style.display = 'none';
             els.correctionDivider.style.display = 'none';
-            els.voiceWarning.style.display = 'none';
             els.checkBtn.disabled = true;
             els.recordBtn.disabled = false;
 
@@ -902,8 +894,6 @@
                         els.voiceWarning.style.display = 'none';
                         console.log('%c Voix cible : ' + voice.name + ' (' + voice.lang + ')', 'background: #222; color: #bada55');
                     } else {
-                        els.missingLangName.textContent = langNames[state.targetLang] || lang;
-                        els.voiceWarning.style.display = 'block';
                         console.error("ERREUR : Aucune voix trouvée pour " + lang);
                     }
 
@@ -925,6 +915,10 @@
                     utterance.onend = () => {
                         els.speakTarget.style.background = '';
                         els.speakTarget.textContent = `🔊 Écouter le ${langNames[state.targetLang] || 'Langue'}`;
+
+                        // Démarrage automatique de l'enregistrement après la lecture
+                        console.log('Lecture terminée, démarrage auto de l\'enregistrement...');
+                        setTimeout(startRecording, 300);
                     };
 
                     utterance.onerror = (e) => {
