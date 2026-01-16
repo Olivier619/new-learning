@@ -672,6 +672,7 @@
             audioChunks: [],
             correctCount: 0,
             totalCount: 0,
+            currentFailCount: 0,
             showTranslation: true,
             isRecording: false,
             autoNextTimeout: null
@@ -815,6 +816,7 @@
             const frDialogues = levelData.fr;
             state.currentFrench = frDialogues[Math.floor(Math.random() * frDialogues.length)];
             state.totalCount++;
+            state.currentFailCount = 0; // S'assurer que le compteur est à zéro pour chaque nouvelle phrase
             els.totalCount.textContent = state.totalCount;
 
             els.frenchDialogue.textContent = state.currentFrench;
@@ -976,26 +978,48 @@
             els.correctionDivider.style.display = 'block';
             els.correctionContainer.style.display = 'block';
 
+            // Seuil augmenté à 0.8 pour un contrôle plus strict de la prononciation
             const similarity = calculateSimilarity(state.transcript.toLowerCase(), state.currentTarget.toLowerCase());
 
-            if (similarity > 0.6) {
+            if (similarity > 0.8) {
                 els.correctionBox.className = 'correction-box success correction-content';
-                els.correctionBox.innerHTML = `<strong>✅ Excellent!</strong> Votre prononciation est très proche de la cible.`;
+                els.correctionBox.innerHTML = `<strong>✅ Excellent!</strong> Votre prononciation est très bonne.`;
                 state.correctCount++;
                 els.correctCount.textContent = state.correctCount;
+                state.currentFailCount = 0; // Reset sur succès
+
+                if (isAuto) {
+                    state.autoNextTimeout = setTimeout(() => {
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                        setTimeout(generateDialogue, 500);
+                    }, 2500);
+                }
             } else {
+                state.currentFailCount++;
                 els.correctionBox.className = 'correction-box error correction-content';
-                els.correctionBox.innerHTML = `<strong>Cible:</strong> ${state.currentTarget}<br><strong>Votre réponse:</strong> ${state.transcript}`;
+
+                if (state.currentFailCount < 3) {
+                    els.correctionBox.innerHTML = `<strong>Prononciation incorrecte (Essai ${state.currentFailCount}/3)</strong><br>Écoutez bien et recommencez.<br><strong style="color:#222">Cible:</strong> ${state.currentTarget}`;
+                    autoScroll(els.correctionBox);
+
+                    // Répéter le dialogue après un court délai
+                    setTimeout(() => {
+                        speakText(state.currentTarget, state.targetLang);
+                    }, 1500);
+                } else {
+                    els.correctionBox.innerHTML = `<strong>Échec après 3 essais.</strong><br>Passons à la suite.<br><strong>Cible était :</strong> ${state.currentTarget}`;
+                    state.currentFailCount = 0; // Reset pour la suite
+
+                    if (isAuto) {
+                        state.autoNextTimeout = setTimeout(() => {
+                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                            setTimeout(generateDialogue, 500);
+                        }, 3000);
+                    }
+                }
             }
 
             autoScroll(els.correctionBox);
-
-            if (isAuto) {
-                state.autoNextTimeout = setTimeout(() => {
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                    setTimeout(generateDialogue, 500);
-                }, 3000);
-            }
         }
 
         function calculateSimilarity(str1, str2) {
