@@ -24,9 +24,9 @@
             --font-size-base: 14px;
             --font-size-lg: 16px;
             --font-size-xl: 18px;
-            --space-8: 4px;
-            --space-16: 8px;
-            --space-20: 12px;
+            --space-8: 2px;
+            --space-16: 4px;
+            --space-20: 8px;
             --radius-base: 8px;
         }
 
@@ -51,10 +51,10 @@
 
         .header {
             text-align: center;
-            margin-bottom: var(--space-20);
+            margin-bottom: 4px;
             display: flex;
             flex-direction: column;
-            gap: var(--space-16);
+            gap: 2px;
         }
 
         .header h1 {
@@ -151,25 +151,74 @@
             }
 
             .header h1 {
-                font-size: 24px;
+                font-size: 20px;
             }
 
             .btn {
-                padding: var(--space-16) var(--space-20);
-                /* Larger touch targets */
+                padding: var(--space-8) var(--space-16);
                 width: 100%;
                 justify-content: center;
             }
+
+            .card {
+                padding: var(--space-8);
+            }
+
+            .dialogue-box {
+                min-height: 50px;
+                padding: var(--space-8);
+            }
+        }
+
+        /* Collapsible Header Styles */
+        .header-content {
+            transition: all 0.3s ease-in-out;
+            max-height: 500px;
+            overflow: hidden;
+            opacity: 1;
+        }
+
+        .header.collapsed .header-content {
+            max-height: 0;
+            opacity: 0;
+            margin-bottom: 0;
+        }
+
+        .header-toggle-btn {
+            background: var(--color-teal-500);
+            color: white;
+            border: none;
+            border-radius: 0 0 12px 12px;
+            padding: 4px 12px;
+            cursor: pointer;
+            margin: -8px auto 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            width: fit-content;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        .header-toggle-btn i {
+            transition: transform 0.3s;
+            font-style: normal;
+        }
+
+        .header.collapsed .header-toggle-btn i {
+            transform: rotate(180deg);
         }
 
         .card {
             background: var(--color-white);
             border-radius: 12px;
-            padding: var(--space-20);
+            padding: var(--space-8);
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
             display: flex;
             flex-direction: column;
-            gap: var(--space-16);
+            gap: 4px;
         }
 
         .card h2 {
@@ -291,7 +340,7 @@
 
         .correction-content {
             font-size: 13px;
-            line-height: 1.6;
+            line-height: 1.2;
             color: var(--color-slate-900);
         }
 
@@ -308,9 +357,9 @@
         }
 
         .divider {
-            height: 2px;
+            height: 1px;
             background: var(--color-gray-200);
-            margin: var(--space-8) 0;
+            margin: 2px 0;
         }
 
         .loading {
@@ -372,53 +421,58 @@
 
 <body>
     <div class="container">
-        <div class="header">
-            <h1>🗣️ Langue Learning</h1>
+        <div class="header" id="appHeader">
+            <div class="header-content">
+                <h1>🗣️ Langue Learning</h1>
 
-            <div class="controls">
-                <div class="control-group">
-                    <label>Langue cible</label>
-                    <select id="targetLang">
-                        <option value="el-GR">Grec (Ελληνικά)</option>
-                        <option value="es-ES">Espagnol (Español)</option>
-                        <option value="de-DE">Allemand (Deutsch)</option>
-                        <option value="it-IT">Italien (Italiano)</option>
-                        <option value="pt-PT">Portugais (Português)</option>
-                        <option value="ja-JP">Japonais (日本語)</option>
-                    </select>
+                <div class="controls">
+                    <div class="control-group">
+                        <label>Langue cible</label>
+                        <select id="targetLang">
+                            <option value="el-GR">Grec (Ελληνικά)</option>
+                            <option value="es-ES">Espagnol (Español)</option>
+                            <option value="de-DE">Allemand (Deutsch)</option>
+                            <option value="it-IT">Italien (Italiano)</option>
+                            <option value="pt-PT">Portugais (Português)</option>
+                            <option value="ja-JP">Japonais (日本語)</option>
+                        </select>
+                    </div>
+
+                    <div class="control-group">
+                        <label>Niveau</label>
+                        <select id="level">
+                            <option value="A1">Débutant A1</option>
+                            <option value="A2">Élémentaire A2</option>
+                            <option value="B1">Intermédiaire B1</option>
+                            <option value="B2">Bon B2</option>
+                        </select>
+                    </div>
+
+                    <div class="control-group">
+                        <label>Sujet</label>
+                        <select id="topic">
+                            <option value="presentation">Présentation</option>
+                            <option value="magasin">Au magasin</option>
+                            <option value="dentiste">Chez le dentiste</option>
+                            <option value="voyage">Voyage & Transport</option>
+                            <option value="sante">Santé & Docteur</option>
+                            <option value="loisirs">Loisirs & Hobbies</option>
+                            <option value="restaurant">Restaurant & Café</option>
+                            <option value="travail">Travail & Bureau</option>
+                            <option value="famille">Famille & Amis</option>
+                            <option value="culture">Culture & Société</option>
+                            <option value="animaux">Animaux & Domestiques</option>
+                        </select>
+                    </div>
+
+                    <button class="btn btn-primary" id="generateBtn">
+                        ✨ Générer Dialogue
+                    </button>
                 </div>
-
-                <div class="control-group">
-                    <label>Niveau</label>
-                    <select id="level">
-                        <option value="A1">Débutant A1</option>
-                        <option value="A2">Élémentaire A2</option>
-                        <option value="B1">Intermédiaire B1</option>
-                        <option value="B2">Bon B2</option>
-                    </select>
-                </div>
-
-                <div class="control-group">
-                    <label>Sujet</label>
-                    <select id="topic">
-                        <option value="presentation">Présentation</option>
-                        <option value="magasin">Au magasin</option>
-                        <option value="dentiste">Chez le dentiste</option>
-                        <option value="voyage">Voyage & Transport</option>
-                        <option value="sante">Santé & Docteur</option>
-                        <option value="loisirs">Loisirs & Hobbies</option>
-                        <option value="restaurant">Restaurant & Café</option>
-                        <option value="travail">Travail & Bureau</option>
-                        <option value="famille">Famille & Amis</option>
-                        <option value="culture">Culture & Société</option>
-                        <option value="animaux">Animaux & Domestiques</option>
-                    </select>
-                </div>
-
-                <button class="btn btn-primary" id="generateBtn">
-                    ✨ Générer Dialogue
-                </button>
             </div>
+            <button class="header-toggle-btn" id="headerToggle">
+                <span id="toggleText">Masquer réglages</span> &nbsp; <i id="toggleIcon">▲</i>
+            </button>
         </div>
 
         <div class="content">
@@ -673,7 +727,10 @@
             correctionDivider: document.getElementById('correctionDivider'),
             correctCount: document.getElementById('correctCount'),
             totalCount: document.getElementById('totalCount'),
-            phoneticDialogue: document.getElementById('phoneticDialogue')
+            phoneticDialogue: document.getElementById('phoneticDialogue'),
+            appHeader: document.getElementById('appHeader'),
+            headerToggle: document.getElementById('headerToggle'),
+            toggleText: document.getElementById('toggleText')
         };
 
         // Langue cible
@@ -772,6 +829,11 @@
         els.levelSelect.addEventListener('change', (e) => {
             state.level = e.target.value;
             generateDialogue();
+        });
+
+        els.headerToggle.addEventListener('click', () => {
+            const isCollapsed = els.appHeader.classList.toggle('collapsed');
+            els.toggleText.textContent = isCollapsed ? 'Afficher réglages' : 'Masquer réglages';
         });
 
         function autoScroll(el) {
