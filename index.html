@@ -41,23 +41,7 @@
             --radius-base: 8px;
         }
 
-        [data-theme="dark"] {
-            /* Dark mode overrides */
-            --bg-primary: #1a1a1a;
-            --bg-secondary: #2d2d2d;
-            --bg-gradient-start: #1a1a1a;
-            --bg-gradient-end: #252525;
-            --text-primary: #e0e0e0;
-            --text-secondary: #a0a0a0;
-            --border-color: #404040;
-            --card-bg: #252525;
-            --card-shadow: rgba(0, 0, 0, 0.4);
 
-            /* Adjust teal colors for dark mode */
-            --color-teal-500: rgba(50, 184, 198, 1);
-            --color-slate-900: #e0e0e0;
-            --color-gray-200: #404040;
-        }
 
         * {
             box-sizing: border-box;
@@ -430,13 +414,7 @@
 <body>
     <div class="container">
         <div class="header" id="appHeader">
-            <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
-                <h1 style="margin: 0;">🗣️ Langue Learning</h1>
-                <button id="themeToggle" class="btn btn-secondary" style="padding: 8px 16px; font-size: 20px;"
-                    title="Changer le thème">
-                    <span id="themeIcon">🌙</span>
-                </button>
-            </div>
+            <h1>🗣️ Langue Learning</h1>
 
             <div class="controls">
                 <div class="controls-row">
@@ -791,8 +769,6 @@
             totalCount: document.getElementById('totalCount'),
             phoneticDialogue: document.getElementById('phoneticDialogue'),
             appHeader: document.getElementById('appHeader'),
-            themeToggle: document.getElementById('themeToggle'),
-            themeIcon: document.getElementById('themeIcon'),
             successRate: document.getElementById('successRate'),
             totalCorrect: document.getElementById('totalCorrect'),
             totalIncorrect: document.getElementById('totalIncorrect'),
@@ -896,7 +872,7 @@
             state.level = e.target.value;
             generateDialogue();
         });
-        els.themeToggle.addEventListener('click', toggleTheme);
+
         els.resetProgress.addEventListener('click', resetProgress);
 
         function autoScroll(el) {
@@ -1155,37 +1131,7 @@
             return costs[s2.length];
         }
 
-        // ==================== THEME FUNCTIONS ====================
-        function initTheme() {
-            // Check localStorage first
-            const savedTheme = localStorage.getItem('theme');
 
-            if (savedTheme) {
-                applyTheme(savedTheme);
-            } else {
-                // Detect system preference
-                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                applyTheme(prefersDark ? 'dark' : 'light');
-            }
-        }
-
-        function applyTheme(theme) {
-            if (theme === 'dark') {
-                document.documentElement.setAttribute('data-theme', 'dark');
-                els.themeIcon.textContent = '☀️';
-            } else {
-                document.documentElement.removeAttribute('data-theme');
-                els.themeIcon.textContent = '🌙';
-            }
-        }
-
-        function toggleTheme() {
-            const currentTheme = document.documentElement.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-
-            applyTheme(newTheme);
-            localStorage.setItem('theme', newTheme);
-        }
 
         // ==================== PROGRESS TRACKING FUNCTIONS ====================
         function loadProgress() {
@@ -1257,8 +1203,7 @@
         }
 
         // ==================== INITIALIZATION ====================
-        // Initialize theme
-        initTheme();
+
 
         // Load progress
         loadProgress();
