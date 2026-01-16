@@ -446,6 +446,10 @@
                     <div class="dialogue-box" id="targetDialogue">
                         En attente de génération...
                     </div>
+                    <div id="phoneticDialogue"
+                        style="font-style: italic; color: var(--color-teal-200); margin-top: 4px; font-size: 0.9rem; padding-left: 10px; display: none;">
+                        Prononciation...
+                    </div>
                     <div class="audio-controls">
                         <button class="btn btn-secondary" id="speakTarget" style="flex: 1;">
                             🔊 Écouter le Grec
@@ -522,7 +526,8 @@
                     'de-DE': ["Hallo, wie geht es Ihnen?", "Ich heiße Maria.", "Wie heißen Sie?", "Wo wohnen Sie?", "Ich komme aus Frankreich.", "Freut mich, Sie kennenzulernen.", "Wie alt sind Sie?", "Ich spreche ein wenig Griechisch.", "Wie geht es Ihnen heute?", "Ich bin Student."],
                     'it-IT': ["Buongiorno, come sta?", "Mi chiamo Maria.", "Come ti chiami?", "Dove abiti?", "Vengo dalla Francia.", "Piacere di conoscerti.", "Quanti anni hai?", "Parlo un po' di greco.", "Come va oggi?", "Sono uno studente."],
                     'pt-PT': ["Olá, como está?", "Chamo-me Maria.", "Qual é o seu nome?", "Onde mora?", "Venho de França.", "Muito prazer em conhecê-lo.", "Quantos anos tem?", "Falo um pouco de grego.", "Como vai hoje?", "Sou estudante."],
-                    'ja-JP': ["こんにちは、元気ですか？", "私の名前はマリアです。", "お名前は何ですか？", "どこに住んでいますか？", "フランスから来ました。", "お会いできて光栄です。", "何歳ですか？", "ギリシャ語が少し話せます。", "今日は調子どうですか？", "私は学生です。"]
+                    'ja-JP': ["こんにちは、元気ですか？", "私の名前はマリアです。", "お名前は何ですか？", "どこに住んでいますか？", "フランスから来ました。", "お会いできて光栄です。", "何歳ですか？", "ギリシャ語が少し話せます。", "今日は調子どうですか？", "私は学生です。"],
+                    'roman-el-GR': ["Kaliméra, pós eíste?", "Me léne María.", "Pós sas léne?", "Poú ménete?", "Eímai apó ti Gallía.", "Chaíro polý gia ti gnorimía.", "Póso chronón eíste?", "Miláo líga elliniká.", "Pós eíste símera?", "Eímai foititís."]
                 },
                 A2: {
                     fr: ["Parlez-vous d'autres langues?", "J'aime beaucoup voyager.", "Quel est votre plat préféré?", "Je travaille dans l'informatique.", "Mon film préféré est Inception.", "J'ai deux frères et une sœur.", "Je vis ici depuis trois ans.", "Avez-vous des animaux domestiques?", "J'aime lire des livres le soir.", "Le weekend, je vais à la plage."],
@@ -674,7 +679,8 @@
             correctCount: document.getElementById('correctCount'),
             totalCount: document.getElementById('totalCount'),
             voiceWarning: document.getElementById('voice-warning'),
-            missingLangName: document.getElementById('missing-lang-name')
+            missingLangName: document.getElementById('missing-lang-name'),
+            phoneticDialogue: document.getElementById('phoneticDialogue')
         };
 
         // Langue cible
@@ -799,6 +805,7 @@
             els.transcript.innerHTML = '<span class="transcript-empty">Aucun enregistrement</span>';
             els.correctionContainer.style.display = 'none';
             els.correctionDivider.style.display = 'none';
+            els.voiceWarning.style.display = 'none';
             els.checkBtn.disabled = true;
             els.recordBtn.disabled = false;
 
@@ -816,8 +823,19 @@
             const frIndex = levelData.fr.indexOf(state.currentFrench);
             if (frIndex !== -1 && levelData[state.targetLang]) {
                 state.currentTarget = levelData[state.targetLang][frIndex];
+
+                // Gestion de la romanisation (phonétique)
+                const romanKey = `roman-${state.targetLang}`;
+                if (levelData[romanKey]) {
+                    const phonetic = levelData[romanKey][frIndex];
+                    els.phoneticDialogue.textContent = phonetic;
+                    els.phoneticDialogue.style.display = 'block';
+                } else {
+                    els.phoneticDialogue.style.display = 'none';
+                }
             } else {
                 state.currentTarget = '(Traduction non disponible)';
+                els.phoneticDialogue.style.display = 'none';
             }
             els.targetDialogue.textContent = state.showTranslation ? state.currentTarget : '???';
         }
