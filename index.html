@@ -24,9 +24,9 @@
             --font-size-base: 14px;
             --font-size-lg: 16px;
             --font-size-xl: 18px;
-            --space-8: 8px;
-            --space-16: 16px;
-            --space-20: 20px;
+            --space-8: 4px;
+            --space-16: 8px;
+            --space-20: 12px;
             --radius-base: 8px;
         }
 
@@ -398,6 +398,16 @@
                     </select>
                 </div>
 
+                <div class="control-group">
+                    <label>Sujet</label>
+                    <select id="topic">
+                        <option value="presentation">Présentation</option>
+                        <option value="magasin">Au magasin</option>
+                        <option value="dentiste">Chez le dentiste</option>
+                        <option value="banque">Banque d'investissement</option>
+                    </select>
+                </div>
+
                 <button class="btn btn-primary" id="generateBtn">
                     ✨ Générer Dialogue
                 </button>
@@ -472,7 +482,7 @@
                         </div>
                     </div>
 
-                    <button class="btn btn-primary" id="checkBtn" style="width: 100%;" disabled>
+                    <button class="btn btn-primary" id="checkBtn" style="width: 100%; display: none;" disabled>
                         ✅ Vérifier la Réponse
                     </button>
 
@@ -491,293 +501,67 @@
     <script>
         // Configuration
         const DIALOGUES = {
-            A1: {
-                fr: [
-                    "Bonjour, comment allez-vous?",
-                    "Je m'appelle Marie. Et vous?",
-                    "Quelle heure est-il?",
-                    "Où habitez-vous?",
-                    "Aimez-vous le café?",
-                    "C'est votre premier jour?",
-                    "Vous venez d'où?",
-                    "Que faites-vous dans la vie?"
-                ],
-                'el-GR': [
-                    "Καλημέρα, πώς είστε;",
-                    "Με λένε Μαρία. Εσάς;",
-                    "Τι ώρα είναι;",
-                    "Πού μένετε;",
-                    "Σας αρέσει ο καφές;",
-                    "Είναι η πρώτη σας μέρα;",
-                    "Από πού έρχεστε;",
-                    "Τι κάνετε στη ζωή;"
-                ],
-                'es-ES': [
-                    "Hola, ¿cómo estás?",
-                    "Me llamo María. ¿Y tú?",
-                    "¿Qué hora es?",
-                    "¿Dónde vives?",
-                    "¿Te gusta el café?",
-                    "¿Es tu premier día?",
-                    "¿De dónde vienes?",
-                    "¿A qué te dedicas?"
-                ],
-                'de-DE': [
-                    "Hallo, wie geht es Ihnen?",
-                    "Ich heiße Maria. Und Sie?",
-                    "Wie spät ist es?",
-                    "Wo wohnen Sie?",
-                    "Mögen Sie Kaffee?",
-                    "Ist das Ihr erster Tag?",
-                    "Woher kommen Sie?",
-                    "Was machen Sie beruflich?"
-                ],
-                'it-IT': [
-                    "Buongiorno, come sta?",
-                    "Mi chiamo Maria. E lei?",
-                    "Che ore sono?",
-                    "Dove abita?",
-                    "Le piace il caffè?",
-                    "È il suo primo giorno?",
-                    "Da dove viene?",
-                    "Che lavoro fa?"
-                ],
-                'pt-PT': [
-                    "Olá, como está?",
-                    "Chamo-me Maria. E você?",
-                    "Que horas são?",
-                    "Onde mora?",
-                    "Gosta de café?",
-                    "É o seu primeiro dia?",
-                    "De onde vem?",
-                    "O que faz na vida?"
-                ],
-                'ja-JP': [
-                    "こんにちは、元気ですか？",
-                    "私はマリアです。あなたは？",
-                    "何時ですか？",
-                    "どこに住んでいますか？",
-                    "コーヒーは好きですか？",
-                    "今日は初日ですか？",
-                    "どこから来ましたか？",
-                    "お仕事は何ですか？"
-                ]
+            presentation: {
+                A1: {
+                    fr: ["Bonjour, comment allez-vous?", "Je m'appelle Marie. Et vous?", "Où habitez-vous?", "Vous venez d'où?", "Que faites-vous dans la vie?"],
+                    'el-GR': ["Καλημέρα, πώς είστε;", "Με λένε Μαρία. Εσάς;", "Πού μένετε;", "Από πού έρχεστε;", "Τι κάνετε στη ζωή;"],
+                    'es-ES': ["Hola, ¿cómo estás?", "Me llamo María. ¿Y tú?", "¿Dónde vives?", "¿De dónde vienes?", "¿A qué te dedicas?"],
+                    'de-DE': ["Hallo, wie geht es Ihnen?", "Ich heiße Maria. Und Sie?", "Wo wohnen Sie?", "Woher kommen Sie?", "Was machen Sie beruflich?"],
+                    'it-IT': ["Buongiorno, come sta?", "Mi chiamo Maria. E lei?", "Dove abita?", "Da dove viene?", "Che lavoro fa?"],
+                    'pt-PT': ["Olá, como está?", "Chamo-me Maria. E você?", "Onde mora?", "De onde vem?", "O que faz na vida?"],
+                    'ja-JP': ["こんにちは、元気ですか？", "私はマリアです。あなたは？", "どこに住んでいますか？", "どこから来ましたか？", "お仕事は何ですか？"]
+                },
+                A2: {
+                    fr: ["Parlez-vous d'autres langues?", "Je viens de Paris. C'est une belle ville.", "Pourquoi apprenez-vous cette langue?", "Quel est votre sport préféré?", "Avez-vous des frères et sœurs?"],
+                    'el-GR': ["Μιλάτε άλλες γλώσσες;", "Έρχομαι από το Παρίσι. Είναι μια όμορφη πόλη.", "Γιατί μαθαίνετε αυτή τη γλώσσα;", "Ποιο είναι το αγαπημένο σας άθλημα;", "Έχετε αδέρφια;"],
+                    'es-ES': ["¿Hablas otros idiomas?", "Vengo de París. Es una ciudad hermosa.", "¿Por qué estás aprendiendo este idioma?", "¿Cuál es tu deporte favorito?", "¿Tienes hermanos?"],
+                    'de-DE': ["Sprechen Sie andere Sprachen?", "Ich komme aus Paris. Es ist eine schöne Stadt.", "Warum lernen Sie diese Sprache?", "Was ist Ihr Lieblingssport?", "Haben Sie Geschwister?"],
+                    'it-IT': ["Parla altre lingue?", "Vengo da Parigi. È una bella città.", "Perché impara questa lingua?", "Qual è il suo sport preferito?", "Ha fratelli o sorelle?"],
+                    'pt-PT': ["Fala outras línguas?", "Venho de Paris. É uma cidade bonita.", "Porque está a aprender esta língua?", "Qual é o seu desporto favorito?", "Tem irmãos?"],
+                    'ja-JP': ["他の言語を話せますか？", "パリから来ました。美しい街です。", "なぜこの言語を学んでいるのですか？", "好きなスポーツは何ですか？", "兄弟はいますか？"]
+                },
+                B1: {
+                    fr: ["Comment envisagez-vous votre avenir professionnel?", "Pensez-vous que l'éducation devrait être gratuite?", "Que signifie pour vous réussir dans la vie?"],
+                    'el-GR': ["Πώς φαντάζεστε το επαγγελματικό σας μέλλον;", "Νομίζετε ότι η εκπαίδευση θα έπρεπε να είναι δωρεάν;", "Τι σημαίνει για εσάς η επιτυχία στη ζωή;"],
+                    'es-ES': ["¿Cómo imagina su futuro profesional?", "¿Cree que la educación debería ser gratuita?", "¿Qué significa para usted tener éxito en la vida?"],
+                    'de-DE': ["Wie stellen Sie sich Ihre berufliche Zukunft vor?", "Finden Sie, dass Bildung kostenlos sein sollte?", "Was bedeutet Erfolg im Leben für Sie?"],
+                    'it-IT': ["Come vede il suo futuro professionale?", "Pensa che l'istruzione dovrebbe essere gratuita?", "Cosa significa per lei avere successo nella vita?"],
+                    'pt-PT': ["Como imagina o seu futuro profissional?", "Acha que a educação deveria ser gratuite?", "O que significa para si ter sucesso na vida?"],
+                    'ja-JP': ["あなたの将来の仕事についてどう考えていますか？", "教育は無料であるべきだと思いますか？", "あなたにとって人生の成功とは何ですか？"]
+                }
             },
-            A2: {
-                fr: [
-                    "Parlez-vous d'autres langues?",
-                    "Je viens de Paris. C'est une belle ville.",
-                    "Qu'avez-vous mangé ce matin?",
-                    "Comment s'est passée votre journée?",
-                    "Vous travaillez depuis longtemps ici?",
-                    "Qu'est-ce que vous aimeriez faire ce weekend?",
-                    "Vous connaissez ce restaurant?",
-                    "Pourquoi avez-vous décidé d'apprendre cette langue?"
-                ],
-                'el-GR': [
-                    "Μιλάτε άλλες γλώσσες;",
-                    "Έρχομαι από το Παρίσι. Είναι μια όμορφη πόλη.",
-                    "Τι φάγατε το πρωί;",
-                    "Πώς ήταν η μέρα σας;",
-                    "Δουλεύετε εδώ εδώ και πολύ;",
-                    "Τι θα θέλατε να κάνετε αυτό το Σαββατοκύριακο;",
-                    "Γνωρίζετε αυτό το εστιατόριο;",
-                    "Γιατί αποφασίσατε να μάθετε αυτή τη γλώσσα!"
-                ],
-                'es-ES': [
-                    "¿Hablas otros idiomas?",
-                    "Vengo de París. Es una ciudad hermosa.",
-                    "¿Qué comiste esta mañana?",
-                    "¿Cómo estuvo tu día?",
-                    "¿Llevas mucho tiempo trabajando aquí?",
-                    "¿Qué te gustaría hacer este fin de semana?",
-                    "¿Conoces este restaurante?",
-                    "¿Por qué decidiste aprender este idioma?"
-                ],
-                'de-DE': [
-                    "Sprechen Sie andere Sprachen?",
-                    "Ich komme aus Paris. Es ist eine schöne Stadt.",
-                    "Was haben Sie heute Morgen gegessen?",
-                    "Wie war Ihr Tag?",
-                    "Arbeiten Sie schon lange hier?",
-                    "Was möchten Sie dieses Wochenende machen?",
-                    "Kennen Sie dieses Restaurant?",
-                    "Warum haben Sie sich entschieden, diese Sprache zu lernen?"
-                ],
-                'it-IT': [
-                    "Parla altre lingue?",
-                    "Vengo da Parigi. È una bella città.",
-                    "Cosa ha mangiato stamattina?",
-                    "Com'è andata la sua giornata?",
-                    "Lavora qui da molto tempo?",
-                    "Cosa le piacerebbe fare questo fine settimana?",
-                    "Conosce questo ristorante?",
-                    "Perché ha deciso di imparare questa lingua?"
-                ],
-                'pt-PT': [
-                    "Fala outras línguas?",
-                    "Venho de Paris. É une cidade bonita.",
-                    "O que comeu esta manhã?",
-                    "Como correu o seu dia?",
-                    "Trabalha aqui há muito tempo?",
-                    "O que gostaria de faire este fim de semana?",
-                    "Conhece este restaurante?",
-                    "Porque decidiu aprender esta língua?"
-                ],
-                'ja-JP': [
-                    "他の言語を話せますか？",
-                    "パリから来ました。美しい街です。",
-                    "今朝は何を食べましたか？",
-                    "今日はどんな一日でしたか？",
-                    "ここで長く働いていますか？",
-                    "今週末は何をしたいですか？",
-                    "このレストランを知っていますか？",
-                    "なぜこの言語を学ぼうと思ったのですか？"
-                ]
+            magasin: {
+                A1: {
+                    fr: ["Combien ça coûte?", "Avez-vous ce t-shirt en bleu?", "Où sont les cabines d'essayage?", "Je cherche du pain.", "C'est trop cher."],
+                    'el-GR': ["Πόσο κοστίζει;", "Έχετε αυτό το μπλουζάκι σε μπλε;", "Πού είναι τα δοκιμαστήρια;", "Ψάχνω για ψωμί.", "Είναι πολύ ακριβό."],
+                    'es-ES': ["¿Cuánto cuesta?", "¿Tiene esta camiseta en azul?", "¿Dónde están los probadores?", "Busco pan.", "Es demasiado caro."],
+                    'de-DE': ["Was kostet das?", "Haben Sie dieses T-Shirt in Blau?", "Wo sind die Umkleidekabinen?", "Ich suche Brot.", "Das ist zu teuer."],
+                    'it-IT': ["Quanto costa?", "Ha questa maglietta in blu?", "Dove sono i camerini?", "Cerco del pane.", "È troppo costoso."],
+                    'pt-PT': ["Quanto custa?", "Tem esta t-shirt em azul?", "Onde ficam os provadores?", "Procuro pão.", "É muito caro."],
+                    'ja-JP': ["いくらですか？", "このTシャツの青はありますか？", "試着室はどこですか？", "パンを探しています。", "高すぎます。"]
+                }
             },
-            B1: {
-                fr: [
-                    "Pouvez-vous me donner votre avis sur ce projet?",
-                    "Comment envisagez-vous votre avenir professionnel?",
-                    "Quels sont vos principaux défis actuellement?",
-                    "Pensez-vous que l'éducation devrait être gratuite?",
-                    "Comment géreriez-vous cette situation difficile?",
-                    "Quelles sont les différences culturelles que vous avez observées?",
-                    "Que signifie pour vous réussir dans la vie?",
-                    "Comment pourrait-on résoudre ce problème?"
-                ],
-                'el-GR': [
-                    "Μπορείτε να μου δώσετε τη γνώμη σας για αυτό το έργο;",
-                    "Πώς φαντάζεστε το επαγγελματικό σας μέλλον;",
-                    "Ποιες είναι οι κύριες προκλήσεις σας αυτή τη στιγμή;",
-                    "Νομίζετε ότι η εκπαίδευση θα έπρεπε να είναι δωρεάν;",
-                    "Πώς θα χειριζόσασταν αυτήν τη δύσκολη κατάσταση;",
-                    "Ποιες είναι οι πολιτισμικές διαφορές που παρατηρήσατε;",
-                    "Τι σημαίνει για εσάς η επιτυχία στη ζωή;",
-                    "Πώς θα μπορούσε κανείς να λύσει αυτό το πρόβλημα;"
-                ],
-                'es-ES': [
-                    "¿Puede darme su opinión sobre este proyecto?",
-                    "¿Cómo imagina su futuro profesional?",
-                    "¿Cuáles son sus principales desafíos actualmente?",
-                    "¿Cree que la educación debería ser gratuita?",
-                    "¿Cómo manejaría esta situación difícil?",
-                    "¿Qué diferencias culturales ha observado?",
-                    "¿Qué significa para usted tener éxito en la vida?",
-                    "¿Cómo se podría resolver este problema?"
-                ],
-                'de-DE': [
-                    "Können Sie mir Ihre Meinung zu diesem Projekt sagen?",
-                    "Wie stellen Sie sich Ihre berufliche Zukunft vor?",
-                    "Was sind momentan Ihre größten Herausforderungen?",
-                    "Finden Sie, dass Bildung kostenlos sein sollte?",
-                    "Wie würden Sie mit dieser schwierigen Situation umgehen?",
-                    "Welche kulturellen Unterschiede haben Sie bemerkt?",
-                    "Was bedeutet Erfolg im Leben für Sie?",
-                    "Wie könnte man dieses Problem lösen?"
-                ],
-                'it-IT': [
-                    "Può darmi il suo parere su questo progetto?",
-                    "Come vede il suo futuro professionale?",
-                    "Quali sono le sue sfide principali al momento?",
-                    "Pensa che l'istruzione dovrebbe essere gratuita?",
-                    "Come gestirebbe questa situazione difficile?",
-                    "Quali sono le differenze culturali che ha osservato?",
-                    "Cosa significa per lei avere successo nella vita?",
-                    "Come si potrebbe risolvere questo problema?"
-                ],
-                'pt-PT': [
-                    "Pode dar-me a sua opinião sobre este projeto?",
-                    "Como imagina o seu futuro profissional?",
-                    "Quais são os seus principais desafios atualmente?",
-                    "Acha que a educação deveria ser gratuite?",
-                    "Como lidaria com esta situação difícil?",
-                    "Que diferenças culturais observou?",
-                    "O que significa para si ter sucesso na vida?",
-                    "Como se poderia resolver este problema?"
-                ],
-                'ja-JP': [
-                    "このプロジェクトについて意見を聞かせていただけますか？",
-                    "あなたの将来の仕事についてどう考えていますか？",
-                    "現在の主な課題は何ですか？",
-                    "教育は無料であるべきだと思いますか？",
-                    "この困難な状況にどう対処しますか？",
-                    "どのような文化の違いに気づきましたか？",
-                    "あなたにとって人生の成功とは何ですか？",
-                    "この問題を解決するにはどうすればよいでしょうか？"
-                ]
+            dentiste: {
+                A1: {
+                    fr: ["J'ai mal aux dents.", "C'est grave?", "Je dois prendre rendez-vous.", "Ouvrez la bouche, s'il vous plaît.", "Rincez-vous la bouche."],
+                    'el-GR': ["Πονάει το δόντι μου.", "Είναι σοβαρό;", "Πρέπει να κλείσω ραντεβού.", "Ανοίξτε το στόμα σας, παρακαλώ.", "Ξεπλύνετε το στόμα σας."],
+                    'es-ES': ["Me duele el diente.", "¿Es grave?", "Tengo que pedir una cita.", "Abra la boca, por favor.", "Enjuáguese la boca."],
+                    'de-DE': ["Ich habe Zahnschmerzen.", "Ist es schlimm?", "Ich muss einen Termin machen.", "Öffnen Sie bitte den Mund.", "Spülen Sie Ihren Mund aus."],
+                    'it-IT': ["Ho mal di denti.", "È grave?", "Devo prendere un appuntamento.", "Apra la bocca, per favore.", "Si sciacqui la bocca."],
+                    'pt-PT': ["Dói-me o dente.", "É grave?", "Preciso de marcar uma consulta.", "Abra la boca, por favor.", "Enxague a boca."],
+                    'ja-JP': ["歯が痛いです。", "ひどいですか？", "予約をしたいです。", "口を開けてください。", "口をゆすいでください。"]
+                }
             },
-            B2: {
-                fr: [
-                    "Selon vous, quels sont les enjeux majeurs de notre époque?",
-                    "Comment analysez-vous l'impact de la technologie sur la société?",
-                    "Pourriez-vous me développer votre point de vue sur cette question?",
-                    "Quelles implications cela aurait-il pour l'économie globale?",
-                    "Comment compareriez-vous les différentes approches de ce sujet?",
-                    "Qu'est-ce qui justifierait un changement de politique à ce sujet?",
-                    "Pouvez-vous anticiper les conséquences à long terme?",
-                    "Comment pourrait-on améliorer cette situation de manière significative?"
-                ],
-                'el-GR': [
-                    "Κατά τη γνώμη σας, ποιες είναι οι κύριες προκλήσεις της εποχής μας;",
-                    "Πώς αναλύετε την επίδραση της τεχνολογίας στην κοινωνία;",
-                    "Θα μπορούσατε να αναπτύξετε τη άποψή σας για αυτό το ζήτημα;",
-                    "Ποιες θα ήταν οι επιπτώσεις για την παγκόσμια οικονομία;",
-                    "Πώς θα συγκρίνατε τις διαφορετικές προσεγγίσεις του θέματος;",
-                    "Τι θα δικαιολογούσε μια αλλαγή πολιτικής στο θέμα αυτό;",
-                    "Μπορείτε να προβλέψετε τις μακροπρόθεσμες συνέπειες;",
-                    "Πώς θα μπορούσε κανείς να βελτιώσει σημαντικά αυτήν την κατάσταση;"
-                ],
-                'es-ES': [
-                    "En su opinión, ¿cuáles son los principales desafíos de nuestra época?",
-                    "¿Cómo analiza el impacto de la tecnología en la sociedad?",
-                    "¿Podría explicarme su punto de vista sobre esta cuestión?",
-                    "¿Qué implicaciones tendría esto para la economía global?",
-                    "¿Cómo compararía los diferentes enfoques sobre este tema?",
-                    "¿Qué justificaría un cambio de política al respecto?",
-                    "¿Puede anticipar las consecuencias a largo plazo?",
-                    "¿Cómo se pourrait améliorer ce problème de manière significative?"
-                ],
-                'de-DE': [
-                    "Was sind Ihrer Meinung nach die größten Herausforderungen unserer Zeit?",
-                    "Wie analysieren Sie den Einfluss der Technologie auf die Gesellschaft?",
-                    "Könnten Sie Ihren Standpunkt zu diesem Thema näher erläutern?",
-                    "Welche Auswirkungen hätte dies auf die Weltwirtschaft?",
-                    "Wie würden Sie die verschiedenen Ansätze zu diesem Thema vergleichen?",
-                    "Was würde einen Politikwechsel in diesem Bereich rechtfertigen?",
-                    "Können Sie die langfristigen Folgen absehen?",
-                    "Wie könnte man diese Situation signifikant verbessern?"
-                ],
-                'it-IT': [
-                    "Secondo lei, quali sont le sfide principali della nostra epoca?",
-                    "Come analizza l'impatto della tecnologia sulla società?",
-                    "Potrebbe approfondire il suo punto di vista su questa questione?",
-                    "Quali implicazioni avrebbe per l'economia globale?",
-                    "Come paragonerebbe i diversi approcci a questo argomento?",
-                    "Cosa giustificherebbe un changement de politique in merito?",
-                    "Può anticipare le conseguenze a lungo termine?",
-                    "Come si pourrait migliorare questa situazione in modo significativo?"
-                ],
-                'pt-PT': [
-                    "Na sua opinião, quais são os principais desafios da nossa época?",
-                    "Como analisa o impacto da tecnologia na sociedade?",
-                    "Poderia desenvolver o seu ponto de vista sobre esta questão?",
-                    "Que implicações teria isso para a economia global?",
-                    "Como compararia as diferentes abordagens a este assunto?",
-                    "O que justificaria uma mudança de política sobre este tema?",
-                    "Pode antecipar as consequências a longo prazo?",
-                    "Como se poderia melhorar esta situação de forma significativa?"
-                ],
-                'ja-JP': [
-                    "現代の主要な課題は何だと思いますか？",
-                    "テクノロジーが社会に与える影響をどう分析しますか？",
-                    "この問題についてのあなたの見解を詳しく教えていただけますか？",
-                    "これが世界経済にどのような影響を与えるでしょうか？",
-                    "このテーマに対する異なるアプローチをどのように比較しますか？",
-                    "この件に関して政策変更を正当化するものは何ですか？",
-                    "長期的な影響を予測できますか？",
-                    "この状況を大幅に改善するにはどうすればよいでしょうか？"
-                ]
+            banque: {
+                A2: {
+                    fr: ["Je voudrais ouvrir un compte.", "Quel est le taux d'intérêt?", "Je veux faire un virement.", "Avez-vous des conseils d'investissement?", "Où est le distributeur?"],
+                    'el-GR': ["Θα ήθελα να ανοίξω έναν λογαριασμό.", "Ποιο είναι το επιτόκιο;", "Θέλω να κάνω μια μεταφορά.", "Έχετε επενδυτικές συμβουλές;", "Πού είναι το ΑΤΜ;"],
+                    'es-ES': ["Me gustaría abrir una cuenta.", "¿Cuál es la tasa de interés?", "Quiero hacer una transferencia.", "¿Tiene consejos de inversión?", "¿Dónde está el cajero?"],
+                    'de-DE': ["Ich möchte ein Konto eröffnen.", "Wie hoch ist der Zinssatz?", "Ich möchte eine Überweisung machen.", "Haben Sie Anlagetipps?", "Wo ist der Geldautomat?"],
+                    'it-IT': ["Vorrei aprire un conto.", "Qual è il tasso di interesse?", "Voglio fare un bonifico.", "Ha dei consigli di investimento?", "Dov'è le bancomat?"],
+                    'pt-PT': ["Gostaria de abrir uma conta.", "Qual é a taxa de juro?", "Quero fazer uma transferência.", "Tem conselhos de investimento?", "Onde fica o multibanco?"],
+                    'ja-JP': ["口座を開設したいです。", "利率はいくらですか？", "振込をしたいです。", "投資のアドバイスはありますか？", "ATMはどこですか？"]
+                }
             }
         };
 
@@ -785,6 +569,7 @@
         let state = {
             targetLang: 'el-GR',
             level: 'A1',
+            topic: 'presentation',
             currentFrench: '',
             currentTarget: '',
             transcript: '',
@@ -793,13 +578,15 @@
             correctCount: 0,
             totalCount: 0,
             showTranslation: true,
-            isRecording: false
+            isRecording: false,
+            autoNextTimeout: null
         };
 
         // Éléments DOM
         const els = {
             targetLangSelect: document.getElementById('targetLang'),
             levelSelect: document.getElementById('level'),
+            topicSelect: document.getElementById('topic'),
             generateBtn: document.getElementById('generateBtn'),
             frenchDialogue: document.getElementById('frenchDialogue'),
             targetDialogue: document.getElementById('targetDialogue'),
@@ -884,6 +671,11 @@
                 els.recorderStatus.textContent = 'Prêt à enregistrer';
                 els.recorderStatus.className = 'recorder-status status-ready';
                 els.checkBtn.disabled = state.transcript === '';
+
+                // Vérification automatique
+                if (state.transcript !== '') {
+                    checkAnswer(true);
+                }
             };
         }
 
@@ -896,6 +688,10 @@
         els.recordBtn.addEventListener('click', startRecording);
         els.stopBtn.addEventListener('click', stopRecording);
         els.checkBtn.addEventListener('click', checkAnswer);
+        els.topicSelect.addEventListener('change', (e) => {
+            state.topic = e.target.value;
+            generateDialogue();
+        });
         els.targetLangSelect.addEventListener('change', (e) => {
             state.targetLang = e.target.value;
             if (recognition) recognition.lang = state.targetLang;
@@ -907,9 +703,20 @@
             generateDialogue();
         });
 
+        function autoScroll(el) {
+            if (el) {
+                el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
+
         function generateDialogue() {
-            const dialogues = DIALOGUES[state.level].fr;
-            state.currentFrench = dialogues[Math.floor(Math.random() * dialogues.length)];
+            if (state.autoNextTimeout) clearTimeout(state.autoNextTimeout);
+
+            const topicData = DIALOGUES[state.topic] || DIALOGUES['presentation'];
+            const levelData = topicData[state.level] || topicData['A1'] || topicData[Object.keys(topicData)[0]];
+
+            const frDialogues = levelData.fr;
+            state.currentFrench = frDialogues[Math.floor(Math.random() * frDialogues.length)];
             state.totalCount++;
             els.totalCount.textContent = state.totalCount;
 
@@ -923,16 +730,20 @@
             els.checkBtn.disabled = true;
             els.recordBtn.disabled = false;
 
+            autoScroll(els.frenchDialogue);
+
             setTimeout(() => {
                 speakText(state.currentTarget, state.targetLang);
             }, 1000);
         }
 
         function generateTranslation() {
-            const dialogues = DIALOGUES[state.level];
-            const frIndex = dialogues.fr.indexOf(state.currentFrench);
-            if (frIndex !== -1 && dialogues[state.targetLang]) {
-                state.currentTarget = dialogues[state.targetLang][frIndex];
+            const topicData = DIALOGUES[state.topic] || DIALOGUES['presentation'];
+            const levelData = topicData[state.level] || topicData['A1'] || topicData[Object.keys(topicData)[0]];
+
+            const frIndex = levelData.fr.indexOf(state.currentFrench);
+            if (frIndex !== -1 && levelData[state.targetLang]) {
+                state.currentTarget = levelData[state.targetLang][frIndex];
             } else {
                 state.currentTarget = '(Traduction non disponible)';
             }
@@ -1038,7 +849,7 @@
             els.toggleTranslation.textContent = state.showTranslation ? '👁️ Masquer' : '👁️ Voir';
         }
 
-        function checkAnswer() {
+        function checkAnswer(isAuto = false) {
             if (!state.transcript) return;
             els.correctionDivider.style.display = 'block';
             els.correctionContainer.style.display = 'block';
@@ -1053,6 +864,15 @@
             } else {
                 els.correctionBox.className = 'correction-box error correction-content';
                 els.correctionBox.innerHTML = `<strong>Cible:</strong> ${state.currentTarget}<br><strong>Votre réponse:</strong> ${state.transcript}`;
+            }
+
+            autoScroll(els.correctionBox);
+
+            if (isAuto) {
+                state.autoNextTimeout = setTimeout(() => {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    setTimeout(generateDialogue, 500);
+                }, 3000);
             }
         }
 
