@@ -20,6 +20,17 @@
             --color-red-400: rgba(255, 84, 89, 1);
             --color-green-500: rgba(34, 197, 94, 1);
 
+            /* Theme variables - Light mode (default) */
+            --bg-primary: #ffffff;
+            --bg-secondary: #f5f9f9;
+            --bg-gradient-start: #f5f9f9;
+            --bg-gradient-end: #e8f4f5;
+            --text-primary: #13343b;
+            --text-secondary: #626c71;
+            --border-color: #f5f5f5;
+            --card-bg: #ffffff;
+            --card-shadow: rgba(0, 0, 0, 0.08);
+
             --font-family-base: "Segoe UI", Roboto, sans-serif;
             --font-size-base: 14px;
             --font-size-lg: 16px;
@@ -30,6 +41,24 @@
             --radius-base: 8px;
         }
 
+        [data-theme="dark"] {
+            /* Dark mode overrides */
+            --bg-primary: #1a1a1a;
+            --bg-secondary: #2d2d2d;
+            --bg-gradient-start: #1a1a1a;
+            --bg-gradient-end: #252525;
+            --text-primary: #e0e0e0;
+            --text-secondary: #a0a0a0;
+            --border-color: #404040;
+            --card-bg: #252525;
+            --card-shadow: rgba(0, 0, 0, 0.4);
+
+            /* Adjust teal colors for dark mode */
+            --color-teal-500: rgba(50, 184, 198, 1);
+            --color-slate-900: #e0e0e0;
+            --color-gray-200: #404040;
+        }
+
         * {
             box-sizing: border-box;
         }
@@ -38,9 +67,10 @@
             margin: 0;
             padding: 0;
             font-family: var(--font-family-base);
-            background: linear-gradient(135deg, #f5f9f9 0%, #e8f4f5 100%);
+            background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
             min-height: 100vh;
-            color: var(--color-slate-900);
+            color: var(--text-primary);
+            transition: background 0.3s ease, color 0.3s ease;
         }
 
         .container {
@@ -55,6 +85,7 @@
             display: flex;
             flex-direction: column;
             gap: 2px;
+            position: relative;
         }
 
         .header h1 {
@@ -396,7 +427,13 @@
 <body>
     <div class="container">
         <div class="header" id="appHeader">
-            <h1>🗣️ Langue Learning</h1>
+            <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                <h1 style="margin: 0;">🗣️ Langue Learning</h1>
+                <button id="themeToggle" class="btn btn-secondary" style="padding: 8px 16px; font-size: 20px;"
+                    title="Changer le thème">
+                    <span id="themeIcon">🌙</span>
+                </button>
+            </div>
 
             <div class="controls">
                 <div class="controls-row">
@@ -443,6 +480,28 @@
                 <button class="btn btn-primary" id="generateBtn">
                     ✨ Générer Dialogue
                 </button>
+            </div>
+
+            <!-- Stats Bar -->
+            <div class="stats" style="margin-top: 8px;">
+                <div class="stat">
+                    <div class="stat-value" id="successRate">0%</div>
+                    <div class="stat-label">Taux de réussite</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value" style="color: var(--color-green-500);" id="totalCorrect">0</div>
+                    <div class="stat-label">✅ Correctes</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value" style="color: var(--color-red-400);" id="totalIncorrect">0</div>
+                    <div class="stat-label">❌ Incorrectes</div>
+                </div>
+                <div class="stat">
+                    <button id="resetProgress" class="btn btn-secondary" style="padding: 6px 12px; font-size: 12px;"
+                        title="Réinitialiser les statistiques">
+                        🔄 Reset
+                    </button>
+                </div>
             </div>
         </div>
 
@@ -640,6 +699,11 @@
                 }
             },
             culture: {
+                A1: {
+                    fr: ["J'aime la musique.", "J'aime lire des livres.", "Quel est ton film préféré ?", "C'est une belle fête.", "J'aime danser.", "C'est un bon livre.", "La musique est belle.", "J'aime les films.", "C'est une tradition.", "J'aime l'art."],
+                    'el-GR': ["Μου αρέσει η μουσική.", "Μου αρέσει να διαβάζω βιβλία.", "Ποια είναι η αγαπημένη σου ταινία;", "Είναι μια όμορφη γιορτή.", "Μου αρέσει να χορεύω.", "Είναι ένα καλό βιβλίο.", "Η μουσική είναι όμορφη.", "Μου αρέσουν οι ταινίες.", "Είναι μια παράδοση.", "Μου αρέσει η τέχνη."],
+                    'roman-el-GR': ["/mu a.ˈre.si i mu.si.ˈçi/", "/mu a.ˈre.si na ðia.ˈva.zo vi.ˈvli.a/", "/pça ˈi.ne i a.γa.pi.ˈme.ni su te.ˈni.a/", "/ˈi.ne mça ˈo.mor.fi ʝor.ˈti/", "/mu a.ˈre.si na xo.ˈre.vo/", "/ˈi.ne ˈe.na ka.ˈlo vi.ˈvli.o/", "/i mu.si.ˈçi ˈi.ne ˈo.mor.fi/", "/mu a.ˈre.sun i te.ˈni.es/", "/ˈi.ne mça pa.ˈra.ðo.si/", "/mu a.ˈre.si i ˈte.xni/"]
+                },
                 A2: {
                     fr: ["J'aime aller au musée le weekend.", "Quel est ton artiste préféré ?", "Ce tableau est magnifique.", "Je m'intéresse beaucoup à l'histoire.", "Connaissez-vous ce compositeur ?", "Il y a un concert ce soir.", "J'ai vu une pièce de théâtre hier.", "Le cinéma grec est très intéressant.", "J'aime lire de la poésie.", "C'est un monument historique."],
                     'el-GR': ["Μου αρέσει να πηγαίνω στο μουσείο το Σαββατοκύριακο.", "Ποιος είναι ο αγαπημένος σου καλλιτέχνης;", "Αυτός ο πίνακας είναι υπέροχος.", "Ενδιαφέρομαι πολύ για την ιστορία.", "Γνωρίζετε αυτόν τον συνθέτη;", "Έχει μια συναυλία απόψε.", "Είδα μια θεατρική παράσταση χθες.", "Ο ελληνικός κινηματογράφος είναι πολύ ενδιαφέρων.", "Μου αρέσει να διαβάζω ποίηση.", "Είναι ένα ιστορικό μνημείο."],
@@ -693,6 +757,7 @@
             mediaRecorder: null,
             audioChunks: [],
             correctCount: 0,
+            incorrectCount: 0,
             totalCount: 0,
             currentFailCount: 0,
             showTranslation: true,
@@ -722,7 +787,13 @@
             correctCount: document.getElementById('correctCount'),
             totalCount: document.getElementById('totalCount'),
             phoneticDialogue: document.getElementById('phoneticDialogue'),
-            appHeader: document.getElementById('appHeader')
+            appHeader: document.getElementById('appHeader'),
+            themeToggle: document.getElementById('themeToggle'),
+            themeIcon: document.getElementById('themeIcon'),
+            successRate: document.getElementById('successRate'),
+            totalCorrect: document.getElementById('totalCorrect'),
+            totalIncorrect: document.getElementById('totalIncorrect'),
+            resetProgress: document.getElementById('resetProgress')
         };
 
         // Langue cible
@@ -822,6 +893,8 @@
             state.level = e.target.value;
             generateDialogue();
         });
+        els.themeToggle.addEventListener('click', toggleTheme);
+        els.resetProgress.addEventListener('click', resetProgress);
 
         function autoScroll(el) {
             if (el) {
@@ -1010,6 +1083,9 @@
                 els.correctCount.textContent = state.correctCount;
                 state.currentFailCount = 0; // Reset sur succès
 
+                // Update progress tracking
+                updateStats(true);
+
                 if (isAuto) {
                     state.autoNextTimeout = setTimeout(() => {
                         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -1031,6 +1107,9 @@
                 } else {
                     els.correctionBox.innerHTML = `<strong>Échec après 3 essais.</strong><br>Passons à la suite.<br><strong>Cible était :</strong> ${state.currentTarget}`;
                     state.currentFailCount = 0; // Reset pour la suite
+
+                    // Update progress tracking for failure
+                    updateStats(false);
 
                     if (isAuto) {
                         state.autoNextTimeout = setTimeout(() => {
@@ -1072,6 +1151,114 @@
             }
             return costs[s2.length];
         }
+
+        // ==================== THEME FUNCTIONS ====================
+        function initTheme() {
+            // Check localStorage first
+            const savedTheme = localStorage.getItem('theme');
+
+            if (savedTheme) {
+                applyTheme(savedTheme);
+            } else {
+                // Detect system preference
+                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                applyTheme(prefersDark ? 'dark' : 'light');
+            }
+        }
+
+        function applyTheme(theme) {
+            if (theme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                els.themeIcon.textContent = '☀️';
+            } else {
+                document.documentElement.removeAttribute('data-theme');
+                els.themeIcon.textContent = '🌙';
+            }
+        }
+
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+            applyTheme(newTheme);
+            localStorage.setItem('theme', newTheme);
+        }
+
+        // ==================== PROGRESS TRACKING FUNCTIONS ====================
+        function loadProgress() {
+            try {
+                const saved = localStorage.getItem('greekLearningProgress');
+                if (saved) {
+                    const data = JSON.parse(saved);
+                    state.correctCount = data.correctCount || 0;
+                    state.incorrectCount = data.incorrectCount || 0;
+                    state.totalCount = data.totalCount || 0;
+
+                    updateProgressDisplay();
+                }
+            } catch (e) {
+                console.error('Error loading progress:', e);
+            }
+        }
+
+        function saveProgress() {
+            try {
+                const data = {
+                    correctCount: state.correctCount,
+                    incorrectCount: state.incorrectCount,
+                    totalCount: state.totalCount,
+                    lastUpdated: new Date().toISOString()
+                };
+                localStorage.setItem('greekLearningProgress', JSON.stringify(data));
+            } catch (e) {
+                console.error('Error saving progress:', e);
+            }
+        }
+
+        function updateStats(success) {
+            if (success) {
+                state.correctCount++;
+            } else {
+                state.incorrectCount++;
+            }
+
+            updateProgressDisplay();
+            saveProgress();
+        }
+
+        function updateProgressDisplay() {
+            els.totalCorrect.textContent = state.correctCount;
+            els.totalIncorrect.textContent = state.incorrectCount;
+            els.correctCount.textContent = state.correctCount;
+            els.successRate.textContent = getSuccessRate();
+        }
+
+        function getSuccessRate() {
+            const total = state.correctCount + state.incorrectCount;
+            if (total === 0) return '0%';
+            return ((state.correctCount / total) * 100).toFixed(1) + '%';
+        }
+
+        function resetProgress() {
+            if (confirm('Êtes-vous sûr de vouloir réinitialiser toutes vos statistiques ? Cette action est irréversible.')) {
+                state.correctCount = 0;
+                state.incorrectCount = 0;
+                state.totalCount = 0;
+
+                localStorage.removeItem('greekLearningProgress');
+                updateProgressDisplay();
+                els.totalCount.textContent = '0';
+
+                alert('✅ Statistiques réinitialisées avec succès !');
+            }
+        }
+
+        // ==================== INITIALIZATION ====================
+        // Initialize theme
+        initTheme();
+
+        // Load progress
+        loadProgress();
 
         // Initialiser
         els.targetLangLabel.textContent = langNames[state.targetLang];
