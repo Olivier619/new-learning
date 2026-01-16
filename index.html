@@ -857,6 +857,11 @@
                     const utterance = new SpeechSynthesisUtterance(text);
                     const voices = window.speechSynthesis.getVoices();
 
+                    if (voices.length === 0) {
+                        console.warn("Aucune voix disponible sur cet appareil.");
+                        return;
+                    }
+
                     // Normalisation de la langue cible pour la recherche
                     const normalizedTarget = lang.toLowerCase().replace('_', '-');
                     const targetPrefix = normalizedTarget.split('-')[0];
@@ -868,9 +873,11 @@
 
                     if (voice) {
                         utterance.voice = voice;
-                        console.log('Voix sélectionnée:', voice.name, '(', voice.lang, ')');
+                        console.log('%c Voix cible : ' + voice.name + ' (' + voice.lang + ')', 'background: #222; color: #bada55');
                     } else {
-                        console.warn('Aucune voix trouvée pour:', lang);
+                        console.error("ERREUR : Aucune voix trouvée pour " + lang + ". Merci d'installer le pack de langue dans les paramètres Android.");
+                        // Liste les voix disponibles pour le débug
+                        console.log("Langues disponibles sur cet appareil :", [...new Set(voices.map(v => v.lang))].join(', '));
                     }
 
                     // Configuration cruciale
@@ -884,7 +891,6 @@
                     }
 
                     utterance.onstart = () => {
-                        console.log('Lecture commencée:', text);
                         els.speakTarget.style.background = 'var(--color-teal-300)';
                         els.speakTarget.textContent = '🔊 Lecture...';
                     };
@@ -901,17 +907,15 @@
                     };
 
                     window.speechSynthesis.speak(utterance);
-                }, 150);
+                }, 200);
             }
 
             if (window.speechSynthesis.getVoices().length > 0) {
                 speak();
             } else {
-                window.speechSynthesis.onvoiceschanged = () => {
-                    speak();
-                    window.speechSynthesis.onvoiceschanged = null;
-                };
-                setTimeout(() => { if (window.speechSynthesis.getVoices().length === 0) speak(); }, 500);
+                window.speechSynthesis.onvoiceschanged = () => speak();
+                // Force le chargement sur certains navigateurs mobiles
+                window.speechSynthesis.getVoices();
             }
         }
 
