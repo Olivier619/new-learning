@@ -856,44 +856,52 @@
                 setTimeout(() => {
                     const utterance = new SpeechSynthesisUtterance(text);
                     const voices = window.speechSynthesis.getVoices();
-                    const targetLangPrefix = lang.split('-')[0].toLowerCase();
-                    let voice = voices.find(v => v.lang === lang) ||
-                        voices.find(v => v.lang.toLowerCase().startsWith(targetLangPrefix));
+
+                    // Normalisation de la langue cible pour la recherche
+                    const normalizedTarget = lang.toLowerCase().replace('_', '-');
+                    const targetPrefix = normalizedTarget.split('-')[0];
+
+                    // Recherche de la meilleure voix possible
+                    let voice = voices.find(v => v.lang.toLowerCase().replace('_', '-') === normalizedTarget) ||
+                        voices.find(v => v.lang.toLowerCase().startsWith(targetPrefix)) ||
+                        voices.find(v => v.lang.toLowerCase().includes(targetPrefix));
 
                     if (voice) {
                         utterance.voice = voice;
                         console.log('Voix sélectionnée:', voice.name, '(', voice.lang, ')');
+                    } else {
+                        console.warn('Aucune voix trouvée pour:', lang);
                     }
+
+                    // Configuration cruciale
+                    utterance.lang = lang;
+                    utterance.rate = 0.9;
+                    utterance.pitch = 1.0;
+                    utterance.volume = 1.0;
 
                     if (window.speechSynthesis.paused) {
                         window.speechSynthesis.resume();
                     }
 
-                    utterance.lang = lang;
-                    utterance.rate = 0.85;
-                    utterance.pitch = 1.0;
-                    utterance.volume = 1.0;
-
                     utterance.onstart = () => {
-                        console.log('Lecture commencée pour:', text);
+                        console.log('Lecture commencée:', text);
                         els.speakTarget.style.background = 'var(--color-teal-300)';
-                        els.speakTarget.textContent = '🔊 Lecture en cours...';
+                        els.speakTarget.textContent = '🔊 Lecture...';
                     };
 
                     utterance.onend = () => {
-                        console.log('Lecture terminée.');
                         els.speakTarget.style.background = '';
                         els.speakTarget.textContent = `🔊 Écouter le ${langNames[state.targetLang] || 'Langue'}`;
                     };
 
                     utterance.onerror = (e) => {
-                        console.error('Erreur synthèse vocale:', e);
+                        console.error('Erreur TTS:', e);
                         els.speakTarget.style.background = '';
                         els.speakTarget.textContent = '⚠️ Erreur Audio';
                     };
 
                     window.speechSynthesis.speak(utterance);
-                }, 100);
+                }, 150);
             }
 
             if (window.speechSynthesis.getVoices().length > 0) {
