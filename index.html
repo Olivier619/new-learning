@@ -418,6 +418,12 @@
                 <button class="btn btn-primary" id="generateBtn">
                     ✨ Générer Dialogue
                 </button>
+                <div id="voice-warning"
+                    style="display:none; color: #ffeb3b; background: rgba(0,0,0,0.15); padding: 10px; border-radius: 8px; font-size: 0.85rem; margin-top: 12px; border: 1px solid #ffeb3b; line-height: 1.4;">
+                    ⚠️ La voix <span id="missing-lang-name"></span> n'est pas installée sur cet appareil. <br>
+                    <div style="margin-top:5px; opacity: 0.9;">Allez dans <b>Paramètres</b> et cherchez <b>"Synthèse
+                            vocale"</b> pour installer le pack de langue.</div>
+                </div>
             </div>
         </div>
 
@@ -666,7 +672,9 @@
             correctionContainer: document.getElementById('correctionContainer'),
             correctionDivider: document.getElementById('correctionDivider'),
             correctCount: document.getElementById('correctCount'),
-            totalCount: document.getElementById('totalCount')
+            totalCount: document.getElementById('totalCount'),
+            voiceWarning: document.getElementById('voice-warning'),
+            missingLangName: document.getElementById('missing-lang-name')
         };
 
         // Langue cible
@@ -873,11 +881,12 @@
 
                     if (voice) {
                         utterance.voice = voice;
+                        els.voiceWarning.style.display = 'none';
                         console.log('%c Voix cible : ' + voice.name + ' (' + voice.lang + ')', 'background: #222; color: #bada55');
                     } else {
-                        console.error("ERREUR : Aucune voix trouvée pour " + lang + ". Merci d'installer le pack de langue dans les paramètres Android.");
-                        // Liste les voix disponibles pour le débug
-                        console.log("Langues disponibles sur cet appareil :", [...new Set(voices.map(v => v.lang))].join(', '));
+                        els.missingLangName.textContent = langNames[state.targetLang] || lang;
+                        els.voiceWarning.style.display = 'block';
+                        console.error("ERREUR : Aucune voix trouvée pour " + lang);
                     }
 
                     // Configuration cruciale
