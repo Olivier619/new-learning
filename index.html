@@ -405,6 +405,13 @@
                         <option value="magasin">Au magasin</option>
                         <option value="dentiste">Chez le dentiste</option>
                         <option value="banque">Banque d'investissement</option>
+                        <option value="voyage">Voyage & Transport</option>
+                        <option value="sante">Santé & Docteur</option>
+                        <option value="loisirs">Loisirs & Hobbies</option>
+                        <option value="restaurant">Restaurant & Café</option>
+                        <option value="travail">Travail & Bureau</option>
+                        <option value="famille">Famille & Amis</option>
+                        <option value="culture">Culture & Société</option>
                     </select>
                 </div>
 
@@ -503,64 +510,121 @@
         const DIALOGUES = {
             presentation: {
                 A1: {
-                    fr: ["Bonjour, comment allez-vous?", "Je m'appelle Marie. Et vous?", "Où habitez-vous?", "Vous venez d'où?", "Que faites-vous dans la vie?"],
-                    'el-GR': ["Καλημέρα, πώς είστε;", "Με λένε Μαρία. Εσάς;", "Πού μένετε;", "Από πού έρχεστε;", "Τι κάνετε στη ζωή;"],
-                    'es-ES': ["Hola, ¿cómo estás?", "Me llamo María. ¿Y tú?", "¿Dónde vives?", "¿De dónde vienes?", "¿A qué te dedicas?"],
-                    'de-DE': ["Hallo, wie geht es Ihnen?", "Ich heiße Maria. Und Sie?", "Wo wohnen Sie?", "Woher kommen Sie?", "Was machen Sie beruflich?"],
-                    'it-IT': ["Buongiorno, come sta?", "Mi chiamo Maria. E lei?", "Dove abita?", "Da dove viene?", "Che lavoro fa?"],
-                    'pt-PT': ["Olá, como está?", "Chamo-me Maria. E você?", "Onde mora?", "De onde vem?", "O que faz na vida?"],
-                    'ja-JP': ["こんにちは、元気ですか？", "私はマリアです。あなたは？", "どこに住んでいますか？", "どこから来ましたか？", "お仕事は何ですか？"]
+                    fr: ["Bonjour, comment allez-vous?", "Je m'appelle Marie.", "Quel est votre nom?", "Où habitez-vous?", "Je viens de France.", "Enchanté de vous rencontrer.", "Quel âge avez-vous?", "Je parle un peu grec.", "Comment ça va aujourd'hui?", "Je suis étudiant."],
+                    'el-GR': ["Καλημέρα, πώς είστε;", "Με λένε Μαρία.", "Πώς σας λένε;", "Πού μένετε;", "Είμαι από τη Γαλλία.", "Χαίρω πολύ για τη γνωριμία.", "Πόσο χρονών είστε;", "Μιλάω λίγα ελληνικά.", "Πώς είστε σήμερα;", "Είμαι φοιτητής."],
+                    'es-ES': ["Hola, ¿cómo estás?", "Me llamo María.", "¿Cómo te llamas?", "¿Dónde vives?", "Soy de Francia.", "Encantado de conocerte.", "¿Cuántos años tienes?", "Hablo un poco de griego.", "¿Cómo va todo hoy?", "Soy estudiante."],
+                    'de-DE': ["Hallo, wie geht es Ihnen?", "Ich heiße Maria.", "Wie heißen Sie?", "Wo wohnen Sie?", "Ich komme aus Frankreich.", "Freut mich, Sie kennenzulernen.", "Wie alt sind Sie?", "Ich spreche ein wenig Griechisch.", "Wie geht es Ihnen heute?", "Ich bin Student."],
+                    'it-IT': ["Buongiorno, come sta?", "Mi chiamo Maria.", "Come ti chiami?", "Dove abiti?", "Vengo dalla Francia.", "Piacere di conoscerti.", "Quanti anni hai?", "Parlo un po' di greco.", "Come va oggi?", "Sono uno studente."],
+                    'pt-PT': ["Olá, como está?", "Chamo-me Maria.", "Qual é o seu nome?", "Onde mora?", "Venho de França.", "Muito prazer em conhecê-lo.", "Quantos anos tem?", "Falo um pouco de grego.", "Como vai hoje?", "Sou estudante."],
+                    'ja-JP': ["こんにちは、元気ですか？", "私の名前はマリアです。", "お名前は何ですか？", "どこに住んでいますか？", "フランスから来ました。", "お会いできて光栄です。", "何歳ですか？", "ギリシャ語が少し話せます。", "今日は調子どうですか？", "私は学生です。"]
                 },
                 A2: {
-                    fr: ["Parlez-vous d'autres langues?", "Je viens de Paris. C'est une belle ville.", "Pourquoi apprenez-vous cette langue?", "Quel est votre sport préféré?", "Avez-vous des frères et sœurs?"],
-                    'el-GR': ["Μιλάτε άλλες γλώσσες;", "Έρχομαι από το Παρίσι. Είναι μια όμορφη πόλη.", "Γιατί μαθαίνετε αυτή τη γλώσσα;", "Ποιο είναι το αγαπημένο σας άθλημα;", "Έχετε αδέρφια;"],
-                    'es-ES': ["¿Hablas otros idiomas?", "Vengo de París. Es una ciudad hermosa.", "¿Por qué estás aprendiendo este idioma?", "¿Cuál es tu deporte favorito?", "¿Tienes hermanos?"],
-                    'de-DE': ["Sprechen Sie andere Sprachen?", "Ich komme aus Paris. Es ist eine schöne Stadt.", "Warum lernen Sie diese Sprache?", "Was ist Ihr Lieblingssport?", "Haben Sie Geschwister?"],
-                    'it-IT': ["Parla altre lingue?", "Vengo da Parigi. È una bella città.", "Perché impara questa lingua?", "Qual è il suo sport preferito?", "Ha fratelli o sorelle?"],
-                    'pt-PT': ["Fala outras línguas?", "Venho de Paris. É uma cidade bonita.", "Porque está a aprender esta língua?", "Qual é o seu desporto favorito?", "Tem irmãos?"],
-                    'ja-JP': ["他の言語を話せますか？", "パリから来ました。美しい街です。", "なぜこの言語を学んでいるのですか？", "好きなスポーツは何ですか？", "兄弟はいますか？"]
-                },
-                B1: {
-                    fr: ["Comment envisagez-vous votre avenir professionnel?", "Pensez-vous que l'éducation devrait être gratuite?", "Que signifie pour vous réussir dans la vie?"],
-                    'el-GR': ["Πώς φαντάζεστε το επαγγελματικό σας μέλλον;", "Νομίζετε ότι η εκπαίδευση θα έπρεπε να είναι δωρεάν;", "Τι σημαίνει για εσάς η επιτυχία στη ζωή;"],
-                    'es-ES': ["¿Cómo imagina su futuro profesional?", "¿Cree que la educación debería ser gratuita?", "¿Qué significa para usted tener éxito en la vida?"],
-                    'de-DE': ["Wie stellen Sie sich Ihre berufliche Zukunft vor?", "Finden Sie, dass Bildung kostenlos sein sollte?", "Was bedeutet Erfolg im Leben für Sie?"],
-                    'it-IT': ["Come vede il suo futuro professionale?", "Pensa che l'istruzione dovrebbe essere gratuita?", "Cosa significa per lei avere successo nella vita?"],
-                    'pt-PT': ["Como imagina o seu futuro profissional?", "Acha que a educação deveria ser gratuite?", "O que significa para si ter sucesso na vida?"],
-                    'ja-JP': ["あなたの将来の仕事についてどう考えていますか？", "教育は無料であるべきだと思いますか？", "あなたにとって人生の成功とは何ですか？"]
+                    fr: ["Parlez-vous d'autres langues?", "J'aime beaucoup voyager.", "Quel est votre plat préféré?", "Je travaille dans l'informatique.", "Mon film préféré est Inception.", "J'ai deux frères et une sœur.", "Je vis ici depuis trois ans.", "Avez-vous des animaux domestiques?", "J'aime lire des livres le soir.", "Le weekend, je vais à la plage."],
+                    'el-GR': ["Μιλάτε άλλες γλώσσες;", "Μου αρέσει πολύ να ταξιδεύω.", "Ποιο είναι το αγαπημένο σας φαγητό;", "Δουλεύω στην πληροφορική.", "Η αγαπημένη μου ταινία είναι το Inception.", "Έχω δύο αδέρφια και μια αδερφή.", "Μένω εδώ εδώ και τρία χρόνια.", "Έχετε κατοικίδια;", "Μου αρέσει να διαβάζω βιβλία το βράδυ.", "Το Σαββατοκύριακο πηγαίνω στην παραλία."],
+                    'es-ES': ["¿Hablas otros idiomas?", "Me gusta mucho viajar.", "¿Cuál es tu comida favorita?", "Trabajo en informática.", "Mi película favorita es Inception.", "Tengo dos hermanos y una hermana.", "Vivo aquí desde hace tres años.", "¿Tienes mascotas?", "Me gusta leer libros por la noche.", "El fin de semana voy a la playa."],
+                    'de-DE': ["Sprechen Sie andere Sprachen?", "Ich reise sehr gerne.", "Was ist Ihr Lieblingsessen?", "Ich arbeite in der IT.", "Mein Lieblingsfilm ist Inception.", "Ich habe zwei Brüder und eine Schwester.", "Ich lebe seit drei Jahren hier.", "Haben Sie Haustiere?", "Ich lese abends gerne Bücher.", "Am Wochenende gehe ich an den Strand."],
+                    'it-IT': ["Parli altre lingue?", "Mi piace molto viaggiare.", "Qual è il tuo piatto preferito?", "Lavoro nell'informatica.", "Il mio film preferito è Inception.", "Ho due fratelli e una sorella.", "Vivo qui da tre anni.", "Hai animali domestici?", "Mi piace leggere libri la sera.", "Il fine settimana vado in spiaggia."],
+                    'pt-PT': ["Fala outras línguas?", "Gosto muito de viajar.", "Qual é o seu prato favorito?", "Trabalho em informática.", "O meu filme favorito é o Inception.", "Tenho dois irmãos e uma irmã.", "Moro aqui há três anos.", "Tem animais de estimação?", "Gosto de ler livros à noite.", "Ao fim de semana vou à praia."],
+                    'ja-JP': ["他の言語を話せますか？", "旅行が大好きです。", "好きな食べ物は何ですか？", "IT関係の仕事をしています。", "好きな映画はインセプションです。", "兄が2人と姉が1人います。", "ここに3年住んでいます。", "ペットは飼っていますか？", "夜に本を読むのが好きです。", "週末は海に行きます。"]
                 }
             },
             magasin: {
                 A1: {
-                    fr: ["Combien ça coûte?", "Avez-vous ce t-shirt en bleu?", "Où sont les cabines d'essayage?", "Je cherche du pain.", "C'est trop cher."],
-                    'el-GR': ["Πόσο κοστίζει;", "Έχετε αυτό το μπλουζάκι σε μπλε;", "Πού είναι τα δοκιμαστήρια;", "Ψάχνω για ψωμί.", "Είναι πολύ ακριβό."],
-                    'es-ES': ["¿Cuánto cuesta?", "¿Tiene esta camiseta en azul?", "¿Dónde están los probadores?", "Busco pan.", "Es demasiado caro."],
-                    'de-DE': ["Was kostet das?", "Haben Sie dieses T-Shirt in Blau?", "Wo sind die Umkleidekabinen?", "Ich suche Brot.", "Das ist zu teuer."],
-                    'it-IT': ["Quanto costa?", "Ha questa maglietta in blu?", "Dove sono i camerini?", "Cerco del pane.", "È troppo costoso."],
-                    'pt-PT': ["Quanto custa?", "Tem esta t-shirt em azul?", "Onde ficam os provadores?", "Procuro pão.", "É muito caro."],
-                    'ja-JP': ["いくらですか？", "このTシャツの青はありますか？", "試着室はどこですか？", "パンを探しています。", "高すぎます。"]
+                    fr: ["Combien ça coûte?", "Où est la caisse?", "C'est trop cher.", "Je voudrais un sac, s'il vous plaît.", "Est-ce qu'il y a une réduction?", "Je cherche des chaussures.", "Quelle taille est-ce?", "Puis-je payer par carte?", "Où sont les vêtements pour hommes?", "Merci, bonne journée."],
+                    'el-GR': ["Πόσο κοστίζει;", "Πού είναι το ταμείο;", "Είναι πολύ ακριβό.", "Θα ήθελα μια τσάντα, παρακαλώ.", "Υπάρχει κάποια έκπτωση;", "Ψάχνω για παπούτσια.", "Τι νούμερο είναι αυτό;", "Μπορώ να πληρώσω με κάρτα;", "Πού είναι τα ανδρικά ρούχα;", "Ευχαριστώ, καλή σας μέρα."],
+                    'es-ES': ["¿Cuánto cuesta?", "¿Dónde está la caja?", "Es demasiado caro.", "Quisiera una bolsa, por favor.", "¿Hay algún descuento?", "Busco zapatos.", "¿Qué talla es esta?", "¿Puedo pagar con tarjeta?", "¿Dónde está la ropa de hombre?", "Gracias, que tenga un buen día."],
+                    'de-DE': ["Was kostet das?", "Wo ist die Kasse?", "Das ist zu teuer.", "Ich hätte gerne eine Tüte, bitte.", "Gibt es einen Rabatt?", "Ich suche Schuhe.", "Welche Größe ist das?", "Kann ich mit Karte zahlen?", "Wo ist die Herrenbekleidung?", "Danke, einen schönen Tag noch."],
+                    'it-IT': ["Quanto costa?", "Dov'è la cassa?", "È troppo caro.", "Vorrei una busta, per favore.", "C'è uno sconto?", "Cerco delle scarpe.", "Che taglia è?", "Posso pagare con carta?", "Dove sono i vestiti da uomo?", "Grazie, buona giornata."],
+                    'pt-PT': ["Quanto custa?", "Onde fica a caixa?", "É muito caro.", "Queria um saco, por favor.", "Há algum desconto?", "Procuro sapatos.", "Que tamanho é este?", "Posso pagar com cartão?", "Onde fica a roupa de homem?", "Obrigado, tenha um bom dia."],
+                    'ja-JP': ["いくらですか？", "レジはどこですか？", "高すぎます。", "袋をください。", "割引はありますか？", "靴を探しています。", "サイズは何ですか？", "カードで払えますか？", "紳士服はどこですか？", "ありがとうございます、良い一日を。"]
+                }
+            },
+            voyage: {
+                A1: {
+                    fr: ["Où est la gare?", "Un billet pour Paris, s'il vous plaît.", "À quelle heure part le train?", "Je suis perdu.", "Où sont les toilettes?", "Le vol est en retard.", "Où est mon hôtel?", "Je voudrais un taxi.", "C'est loin d'ici?", "Puis-je avoir un plan de la ville?"],
+                    'el-GR': ["Πού είναι ο σταθμός;", "Ένα εισιτήριο για το Παρίσι, παρακαλώ.", "Τι ώρα φεύγει το τρένο;", "Έχω χαθεί.", "Πού είναι οι τουαλέτες;", "Η πτήση έχει καθυστέρηση.", "Πού είναι το ξενοδοχείο μου;", "Θα ήθελα ένα ταξί.", "Είναι μακριά από εδώ;", "Μπορώ να έχω έναν χάρτη της πόλης;"],
+                    'es-ES': ["¿Dónde está la estación?", "Un billete para París, por favor.", "¿A qué hora sale el tren?", "Estoy perdido.", "¿Dónde están los baños?", "El vuelo está retrasado.", "¿Dónde está mi hotel?", "Quisiera un taxi.", "¿Está lejos de aquí?", "¿Puedo tener un mapa de la ciudad?"],
+                    'de-DE': ["Wo ist der Bahnhof?", "Eine Fahrkarte nach Paris, bitte.", "Um wie viel Uhr fährt der Zug?", "Ich habe mich verlaufen.", "Wo sind die Toiletten?", "Der Flug hat Verspätung.", "Wo ist mein Hotel?", "Ich möchte ein Taxi.", "Ist es weit von hier?", "Kann ich einen Stadtplan haben?"],
+                    'it-IT': ["Dov'è la stazione?", "Un biglietto per Parigi, per favore.", "A che ora parte il treno?", "Mi sono perso.", "Dove sono i bagni?", "Il volo è in ritardo.", "Dov'è il mio hotel?", "Vorrei un taxi.", "È lontano da qui?", "Posso avere una mappa della città?"],
+                    'pt-PT': ["Onde fica a estação?", "Um bilhete para Paris, por favor.", "A que horas parte o comboio?", "Estou perdido.", "Onde ficam as casas de banho?", "O voo está atrasado.", "Onde fica o meu hotel?", "Queria um táxi.", "É longe daqui?", "Posso ter um mapa da cidade?"],
+                    'ja-JP': ["駅はどこですか？", "パリ行きのチケットを一枚お願いします。", "電車は何時に出発しますか？", "迷子になりました。", "トイレはどこですか？", "飛行機が遅れています。", "ホテルはどこですか？", "タクシーをお願いします。", "ここから遠いですか？", "地図をいただけますか？"]
+                }
+            },
+            restaurant: {
+                A1: {
+                    fr: ["Une table pour deux, s'il vous plaît.", "La carte, s'il vous plaît.", "Je voudrais un café.", "Avez-vous des plats végétariens?", "L'addition, s'il vous plaît.", "Où est le menu?", "Un verre d'eau, s'il vous plaît.", "C'est délicieux.", "Je n'aime pas la viande.", "Est-ce que le service est compris?"],
+                    'el-GR': ["Ένα τραπέζι για δύο, παρακαλώ.", "Τον κατάλογο, παρακαλώ.", "Θα ήθελα έναν καφέ.", "Έχετε πιάτα για χορτοφάγους;", "Το λογαριασμό, παρακαλώ.", "Πού είναι το μενού;", "Ένα ποτήρι νερό, παρακαλώ.", "Είναι νόστιμο.", "Δεν μου αρέσει το κρέας.", "Περιλαμβάνεται το σέρβις;"],
+                    'es-ES': ["Una mesa para dos, por favor.", "La carta, por favor.", "Quisiera un café.", "¿Tienen platos vegetarianos?", "La cuenta, por favor.", "¿Dónde está el menú?", "Un vaso de agua, por favor.", "Está delicioso.", "No me gusta la carne.", "¿Está incluido el servicio?"],
+                    'de-DE': ["Ein Tisch für zwei, bitte.", "Die Speisekarte, bitte.", "Ich hätte gerne einen Kaffee.", "Haben Sie vegetarische Gerichte?", "Die Rechnung, bitte.", "Wo ist die Speisekarte?", "Ein Glas Wasser, bitte.", "Es ist köstlich.", "Ich mag kein Fleisch.", "Ist der Service inbegriffen?"],
+                    'it-IT': ["Un tavolo per due, per favore.", "Il menu, per favore.", "Vorrei un caffè.", "Avete piatti vegetariani?", "Il conto, per favore.", "Dov'è il menu?", "Un bicchiere d'acqua, per favore.", "È delizioso.", "Non mi piace la carne.", "Il servizio è incluso?"],
+                    'pt-PT': ["Uma mesa para dois, por favor.", "A ementa, por favor.", "Queria um café.", "Têm pratos vegetarianos?", "A conta, por favor.", "Onde está o menu?", "Um copo de água, por favor.", "Está delicioso.", "Não gosto de carne.", "O serviço está incluído?"],
+                    'ja-JP': ["2人用のテーブルをお願いします。", "メニューをください。", "コーヒーをお願いします。", "ベジタリアン料理はありますか？", "お会計をお願いします。", "メニューはどこですか？", "お水を一杯ください。", "美味しいです。", "肉は好きではありません。", "サービス料は含まれていますか？"]
+                }
+            },
+            sante: {
+                A1: {
+                    fr: ["J'ai mal à la tête.", "Où est la pharmacie?", "Je voudrais de l'aspirine.", "J'ai de la fièvre.", "Je suis fatigué.", "Où est l'hôpital?", "Je cherche un médecin.", "J'ai mal au ventre.", "Est-ce contagieux?", "J'ai besoin d'une ordonnance."],
+                    'el-GR': ["Πονάει το κεφάλι μου.", "Πού είναι το φαρμακείο;", "Θα ήθελα ασπιρίνη.", "Έχω πυρετό.", "Είμαι κουρασμένος.", "Πού είναι το νοσοκομείο;", "Ψάχνω για γιατρό.", "Πονάει η κοιλιά μου.", "Είναι κολλητικό;", "Χρειάζομαι μια συνταγή."],
+                    'es-ES': ["Me duele la cabeza.", "¿Dónde está la farmacia?", "Quisiera aspirina.", "Tengo fiebre.", "Estoy cansado.", "¿Dónde está el hospital?", "Busco un médico.", "Me duele el estómago.", "¿Es contagioso?", "Necesito una receta."],
+                    'de-DE': ["Ich habe Kopfschmerzen.", "Wo ist die Apotheke?", "Ich hätte gerne Aspirin.", "Ich habe Fieber.", "Ich bin müde.", "Wo ist das Krankenhaus?", "Ich suche einen Arzt.", "Ich habe Bauchschmerzen.", "Ist es ansteckend?", "Ich brauche ein Rezept."],
+                    'it-IT': ["Ho mal di testa.", "Dov'è la farmacia?", "Vorrei dell'aspirina.", "Ho la febbre.", "Sono stanco.", "Dov'è l'ospedale?", "Cerco un medico.", "Ho mal di pancia.", "È contagioso?", "Ho bisogno di una ricetta."],
+                    'pt-PT': ["Dói-me a cabeça.", "Onde fica a farmácia?", "Queria aspirina.", "Tenho febre.", "Estou cansado.", "Onde fica o hospital?", "Procuro um médico.", "Dói-me a barriga.", "É contagioso?", "Preciso de uma receita."],
+                    'ja-JP': ["頭が痛いです。", "薬局はどこですか？", "アスピリンをください。", "熱があります。", "疲れています。", "病院はどこですか？", "医者を探しています。", "お腹が痛いです。", "伝染しますか？", "処方箋が必要です。"]
+                }
+            },
+            loisirs: {
+                A1: {
+                    fr: ["J'aime la musique.", "Je joue au football.", "Quel est votre hobby?", "J'aime regarder la télé.", "Je vais au cinéma ce soir.", "Aimez-vous danser?", "Je fais du sport le matin.", "Mon chanteur préféré est génial.", "J'aime nager dans la mer.", "Je préfère les jeux vidéo."],
+                    'el-GR': ["Μου αρέσει η μουσική.", "Παίζω ποδόσφαιρο.", "Ποιο είναι το χόμπι σας;", "Μου αρέσει να βλέπω τηλεόραση.", "Πηγαίνω σινεμά απόψε.", "Σας αρέσει να χορεύετε;", "Κάνω σπορ το πρωί.", "Ο αγαπημένος μου τραγουδιστής είναι υπέροχος.", "Μου αρέσει να κολυμπάω στη θάλασσα.", "Προτιμώ τα βιντεοπαιχνίδια."],
+                    'es-ES': ["Me gusta la música.", "Juego al fútbol.", "¿Cuál es tu hobby?", "Me gusta ver la tele.", "Voy al cine esta noche.", "¿Te gusta bailar?", "Hago deporte por la mañana.", "Mi cantante favorito es genial.", "Me gusta nadar en el mar.", "Prefiero los videojuegos."],
+                    'de-DE': ["Ich mag Musik.", "Ich spiele Fußball.", "Was ist Ihr Hobby?", "Ich schaue gerne fern.", "Ich gehe heute Abend ins Kino.", "Tanzen Sie gerne?", "Ich treibe morgens Sport.", "Mein Lieblingssänger ist toll.", "Ich schwimme gerne im Meer.", "Ich bevorzuge Videospiele."],
+                    'it-IT': ["Mi piace la musica.", "Gioco a calcio.", "Qual è il tuo hobby?", "Mi piace guardare la TV.", "Vado al cinema stasera.", "Ti piace ballare?", "Faccio sport al mattino.", "Il meu cantante preferito è fantastico.", "Mi piace nuotare nel mare.", "Preferisco i videogiochi."],
+                    'pt-PT': ["Gosto de música.", "Jogo futebol.", "Qual é o seu hobby?", "Gosto de ver televisão.", "Vou ao cinema logo à noite.", "Gosta de dançar?", "Faço desporto de manhã.", "O meu cantor favorito é fantástico.", "Gosto de nadar no mar.", "Prefiro videojogos."],
+                    'ja-JP': ["音楽が好きです。", "サッカーをします。", "趣味は何ですか？", "テレビを見るのが好きです。", "今夜は映画に行きます。", "ダンスは好きですか？", "朝にスポーツをします。", "私の好きな歌手は最高です。", "海で泳ぐのが好きです。", "ゲームのほうが好きです。"]
+                }
+            },
+            famille: {
+                A1: {
+                    fr: ["Voici ma famille.", "J'ai un fils et une fille.", "Comment s'appelle votre mère?", "Mon père est instituteur.", "J'ai un grand frère.", "Ma grand-mère cuisine très bien.", "Êtes-vous marié?", "Je n'ai pas d'enfants.", "Ma sœur habite à Londres.", "C'est mon cousin."],
+                    'el-GR': ["Αυτή είναι η οικογένειά μου.", "Έχω έναν γιο και μια κόρη.", "Πώς λένε τη μητέρα σας;", "Ο πατέρας μου είναι δάσκαλος.", "Έχω έναν μεγάλο αδερφό.", "Η γιαγιά μου μαγειρεύει πολύ καλά.", "Είστε παντρεμένος;", "Δεν έχω παιδιά.", "Η αδερφή μου μένει στο Λονδίνο.", "Αυτός είναι ο ξάδερφός μου."],
+                    'es-ES': ["Esta es mi familia.", "Tengo un hijo y una hija.", "¿Cómo se llama tu madre?", "Mi padre es profesor.", "Tengo un hermano mayor.", "Mi abuela cocina muy bien.", "¿Estás casado?", "No tengo hijos.", "Mi hermana vive en Londres.", "Es mi primo."],
+                    'de-DE': ["Das ist meine Familie.", "Ich habe einen Sohn und eine Tochter.", "Wie heißt Ihre Mutter?", "Mein Vater ist Lehrer.", "Ich habe einen großen Bruder.", "Meine Großmutter kocht sehr gut.", "Sind Sie verheiratet?", "Ich habe keine Kinder.", "Meine Schwester wohnt in London.", "Das ist mein Cousin."],
+                    'it-IT': ["Questa è la mia famiglia.", "Ho un figlio e una figlia.", "Come si chiama tua madre?", "Mio padre è un insegnante.", "Ho un fratello maggiore.", "Mia nonna cucina molto bene.", "Sei sposato?", "Non ho figli.", "Mia sorella abita a Londra.", "È mio cugino."],
+                    'pt-PT': ["Esta é a minha família.", "Tenho um filho e uma filha.", "Como se chama a sua mãe?", "O meu pai é professor.", "Tenho um irmão mais velho.", "A minha avó cozinha muito bem.", "É casado?", "Não tenho filhos.", "A minha irmã mora em Londres.", "É o meu primo."],
+                    'ja-JP': ["これは私の家族です。", "息子が一人と娘が一人います。", "お母さんの名前は何ですか？", "父は教師です。", "兄が一人います。", "祖母は料理がとても上手です。", "結婚していますか？", "子供はいません。", "姉はロンドンに住んでいます。", "彼は私の従兄弟です。"]
                 }
             },
             dentiste: {
                 A1: {
-                    fr: ["J'ai mal aux dents.", "C'est grave?", "Je dois prendre rendez-vous.", "Ouvrez la bouche, s'il vous plaît.", "Rincez-vous la bouche."],
-                    'el-GR': ["Πονάει το δόντι μου.", "Είναι σοβαρό;", "Πρέπει να κλείσω ραντεβού.", "Ανοίξτε το στόμα σας, παρακαλώ.", "Ξεπλύνετε το στόμα σας."],
-                    'es-ES': ["Me duele el diente.", "¿Es grave?", "Tengo que pedir una cita.", "Abra la boca, por favor.", "Enjuáguese la boca."],
-                    'de-DE': ["Ich habe Zahnschmerzen.", "Ist es schlimm?", "Ich muss einen Termin machen.", "Öffnen Sie bitte den Mund.", "Spülen Sie Ihren Mund aus."],
-                    'it-IT': ["Ho mal di denti.", "È grave?", "Devo prendere un appuntamento.", "Apra la bocca, per favore.", "Si sciacqui la bocca."],
-                    'pt-PT': ["Dói-me o dente.", "É grave?", "Preciso de marcar uma consulta.", "Abra la boca, por favor.", "Enxague a boca."],
-                    'ja-JP': ["歯が痛いです。", "ひどいですか？", "予約をしたいです。", "口を開けてください。", "口をゆすいでください。"]
+                    fr: ["J'ai mal aux dents.", "C'est grave?", "Je dois prendre rendez-vous.", "Ouvrez la bouche, s'il vous plaît.", "Rincez-vous la bouche.", "J'ai peur du dentiste.", "Cette dent me fait souffrir.", "Faut-il arracher la dent?", "Je voudrais un détartrage.", "À quelle heure est mon rendez-vous?"],
+                    'el-GR': ["Πονάει το δόντι μου.", "Είναι σοβαρό;", "Πρέπει να κλείσω ραντεβού.", "Ανοίξτε το στόμα σας, παρακαλώ.", "Ξεπλύνετε το στόμα σας.", "Φοβάμαι τον οδοντίατρο.", "Αυτό το δόντι με πονάει.", "Πρέπει να βγει το δόντι;", "Θα ήθελα έναν καθαρισμό.", "Τι ώρα είναι το ραντεβού μου;"],
+                    'es-ES': ["Me duele el diente.", "¿Es grave?", "Tengo que pedir una cita.", "Abra la boca, por favor.", "Enjuáguese la boca.", "Tengo miedo al dentista.", "Este diente me hace sufrir.", "¿Hay que sacar el diente?", "Quisiera una limpieza.", "¿A qué hora es mi cita?"],
+                    'de-DE': ["Ich habe Zahnschmerzen.", "Ist es schlimm?", "Ich muss einen Termin machen.", "Öffnen Sie bitte den Mund.", "Spülen Sie Ihren Mund aus.", "Ich habe Angst vor dem Zahnarzt.", "Dieser Zahn tut mir weh.", "Muss der Zahn gezogen werden?", "Ich hätte gerne eine Zahnreinigung.", "Wann ist mein Termin?"],
+                    'it-IT': ["Ho mal di denti.", "È grave?", "Devo prendere un appuntamento.", "Apra la bocca, per favore.", "Si sciacqui la bocca.", "Ho paura del dentista.", "Questo dente mi fa soffrire.", "Bisogna togliere il dente?", "Vorrei una pulizia dei denti.", "A che ora è il mio appuntamento?"],
+                    'pt-PT': ["Dói-me o dente.", "É grave?", "Preciso de marcar uma consulta.", "Abra a boca, por favor.", "Enxague a boca.", "Tenho medo do dentista.", "Este dente faz-me sofrer.", "É preciso arrancar o dente?", "Queria uma limpeza.", "A que horas é a minha consulta?"],
+                    'ja-JP': ["歯が痛いです。", "ひどいですか？", "予約をしたいです。", "口を開けてください。", "口をゆすいでください。", "歯医者が怖いです。", "この歯が痛みます。", "抜歯が必要ですか？", "クリーニングをお願いします。", "予約は何時ですか？"]
                 }
             },
             banque: {
                 A2: {
-                    fr: ["Je voudrais ouvrir un compte.", "Quel est le taux d'intérêt?", "Je veux faire un virement.", "Avez-vous des conseils d'investissement?", "Où est le distributeur?"],
-                    'el-GR': ["Θα ήθελα να ανοίξω έναν λογαριασμό.", "Ποιο είναι το επιτόκιο;", "Θέλω να κάνω μια μεταφορά.", "Έχετε επενδυτικές συμβουλές;", "Πού είναι το ΑΤΜ;"],
-                    'es-ES': ["Me gustaría abrir una cuenta.", "¿Cuál es la tasa de interés?", "Quiero hacer una transferencia.", "¿Tiene consejos de inversión?", "¿Dónde está el cajero?"],
-                    'de-DE': ["Ich möchte ein Konto eröffnen.", "Wie hoch ist der Zinssatz?", "Ich möchte eine Überweisung machen.", "Haben Sie Anlagetipps?", "Wo ist der Geldautomat?"],
-                    'it-IT': ["Vorrei aprire un conto.", "Qual è il tasso di interesse?", "Voglio fare un bonifico.", "Ha dei consigli di investimento?", "Dov'è le bancomat?"],
-                    'pt-PT': ["Gostaria de abrir uma conta.", "Qual é a taxa de juro?", "Quero fazer uma transferência.", "Tem conselhos de investimento?", "Onde fica o multibanco?"],
-                    'ja-JP': ["口座を開設したいです。", "利率はいくらですか？", "振込をしたいです。", "投資のアドバイスはありますか？", "ATMはどこですか？"]
+                    fr: ["Je voudrais ouvrir un compte.", "Quel est le taux d'intérêt?", "Je veux faire un virement.", "Avez-vous des conseils d'investissement?", "Où est le distributeur?", "J'ai perdu ma carte bancaire.", "Mon solde est insuffisant.", "Je voudrais changer de l'argent.", "C'est quoi votre commission?", "Puis-je avoir un prêt?"],
+                    'el-GR': ["Θα ήθελα να ανοίξω έναν λογαριασμό.", "Ποιο είναι το επιτόκιο;", "Θέλω να κάνω μια μεταφορά.", "Έχετε επενδυτικές συμβουλές;", "Πού είναι το ΑΤΜ;", "Έχασα την τραπεζική μου κάρτα.", "Το υπόλοιπό μου δεν είναι αρκετό.", "Θα ήθελα να αλλάξω χρήματα.", "Ποια είναι η προμήθειά σας;", "Μπορώ να πάρω ένα δάνειο;"],
+                    'es-ES': ["Me gustaría abrir una cuenta.", "¿Cuál es la tasa de interés?", "Quiero hacer una transferencia.", "¿Tiene consejos de inversión?", "¿Dónde está el cajero?", "He perdido mi tarjeta bancaria.", "Mi saldo es insuficiente.", "Quisiera cambiar dinero.", "¿Cuál es su comisión?", "¿Puedo tener un préstamo?"],
+                    'de-DE': ["Ich möchte ein Konto eröffnen.", "Wie hoch ist der Zinssatz?", "Ich möchte eine Überweisung machen.", "Haben Sie Anlagetipps?", "Wo ist der Geldautomat?", "Ich habe meine Bankkarte verloren.", "Mein Kontostand ist unzureichend.", "Ich möchte Geld wechseln.", "Wie hoch ist Ihre Provision?", "Kann ich einen Kredit bekommen?"],
+                    'it-IT': ["Vorrei aprire un conto.", "Qual è il tasso di interesse?", "Voglio fare un bonifico.", "Ha dei consigli di investimento?", "Dov'è il bancomat?", "Ho perso la mia carta bancaria.", "Il mio saldo è insufficiente.", "Vorrei cambiare dei soldi.", "Qual è la vostra commissione?", "Posso avere un prestito?"],
+                    'pt-PT': ["Gostaria de abrir uma conta.", "Qual é a taxa de juro?", "Quero fazer uma transferência.", "Tem conselhos de investimento?", "Onde fica o multibanco?", "Perdi o meu cartão bancário.", "O meu saldo é insuficiente.", "Gostaria de trocar dinheiro.", "Qual é a vossa comissão?", "Posso ter um empréstimo?"],
+                    'ja-JP': ["口座を開設したいです。", "利率はいくらですか？", "振込をしたいです。", "投資のアドバイスはありますか？", "ATMはどこですか？", "キャッシュカードをなくしました。", "残高が足りません。", "両替をしたいです。", "手数料はいくらですか？", "ローンを組めますか？"]
+                }
+            },
+            culture: {
+                B1: {
+                    fr: ["Comment pourrions-nous améliorer l'environnement?", "Le télétravail change nos habitudes de vie.", "L'intelligence artificielle est un grand défi.", "La culture est essentielle pour l'identité.", "Il faut protéger les traditions locales.", "Les réseaux sociaux influencent les jeunes.", "Le voyage forme la jeunesse.", "La gastronomie française est célèbre.", "L'art est partout autour de nous.", "La paix dans le monde est mon souhait."],
+                    'el-GR': ["Πώς θα μπορούσαμε να βελτιώσουμε το περιβάλλον;", "Η τηλεργασία αλλάζει τις συνήθειες της ζωής μας.", "Η τεχνητή νοημοσύνη είναι μια μεγάλη πρόκληση.", "Ο πολιτισμός είναι απαραίτητος για την ταυτότητα.", "Πρέπει να προστατεύσουμε τις τοπικές παραδόσεις.", "Τα μέσα κοινωνικής δικτύωσης επηρεάζουν τους νέους.", "Το ταξίδι διαμορφώνει τους νέους.", "Η γαλλική γαστρονομία είναι διάσημη.", "Η τέχνη είναι παντού γύρω μας.", "Η παγκόσμια ειρήνη είναι η ευχή μου."],
+                    'es-ES': ["¿Cómo podríamos mejorar el medio ambiente?", "El teletrabajo está cambiando nuestros hábitos de vida.", "La inteligencia artificial es un gran desafío.", "La cultura es esencial para la identidad.", "Hay que proteger las tradiciones locales.", "Las redes sociales influyen en los jóvenes.", "Viajar forma a la juventud.", "La gastronomía francesa es famosa.", "El arte está en todas partes a nuestro alrededor.", "La paz en el mundo es mi deseo."],
+                    'de-DE': ["Wie könnten wir die Umwelt verbessern?", "Telearbeit verändert unsere Lebensgewohnheiten.", "Künstliche Intelligenz ist eine große Herausforderung.", "Kultur ist wesentlich für die Identität.", "Wir müssen lokale Traditionen schützen.", "Soziale Medien beeinflussen die Jugend.", "Reisen bildet die Jugend.", "Die französische Gastronomie ist berühmt.", "Kunst ist überall um uns herum.", "Weltfrieden ist mein Wunsch."],
+                    'it-IT': ["Come potremmo migliorare l'ambiente?", "Il telelavoro sta cambiando le nostre abitudini di vita.", "L'intelligenza artificiale è una grande sfida.", "La cultura è essenziale per l'identità.", "Dobbiamo proteggere le tradizioni locali.", "I social network influenzano i giovani.", "Il viaggio forma la gioventù.", "La gastronomia francese è famosa.", "L'arte è ovunque intorno a noi.", "La pace nel mondo è il mio desiderio."],
+                    'pt-PT': ["Como poderíamos melhorar o ambiente?", "O teletrabalho está a mudar os nossos hábitos de vida.", "A inteligência artificial é um grande desafio.", "A cultura é essencial para a identidade.", "É preciso proteger as tradições locais.", "As redes sociais influenciam os jovens.", "Viajar forma a juventude.", "A gastronomia francesa é famosa.", "A arte está em todo o lado à nossa volta.", "A paz no mundo é o meu desejo."],
+                    'ja-JP': ["どのように環境を改善できるでしょうか？", "テレワークは私たちの生活習慣を変えています。", "人工知能は大きな挑戦です。", "文化はアイデンティティーにとって不可欠です。", "地域の伝統を守らなければなりません。", "ソーシャルメディアは若者に影響を与えます。", "旅は人を成長させます。", "フランス料理は有名です。", "芸術は私たちの周りのいたるところにあります。", "世界平和が私の願いです。"]
                 }
             }
         };
