@@ -165,51 +165,24 @@
             }
 
             .dialogue-box {
-                min-height: 50px;
+                min-height: 40px;
                 padding: var(--space-8);
+            }
+
+            .controls-row {
+                display: flex;
+                gap: var(--space-8);
+                width: 100%;
+            }
+
+            .controls-row .control-group {
+                flex: 1;
             }
         }
 
-        /* Collapsible Header Styles */
-        .header-content {
-            transition: all 0.3s ease-in-out;
-            max-height: 500px;
-            overflow: hidden;
-            opacity: 1;
-        }
 
-        .header.collapsed .header-content {
-            max-height: 0;
-            opacity: 0;
-            margin-bottom: 0;
-        }
 
-        .header-toggle-btn {
-            background: var(--color-teal-500);
-            color: white;
-            border: none;
-            border-radius: 0 0 12px 12px;
-            padding: 4px 12px;
-            cursor: pointer;
-            margin: -8px auto 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 11px;
-            width: fit-content;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            text-transform: uppercase;
-            font-weight: 700;
-        }
 
-        .header-toggle-btn i {
-            transition: transform 0.3s;
-            font-style: normal;
-        }
-
-        .header.collapsed .header-toggle-btn i {
-            transform: rotate(180deg);
-        }
 
         .card {
             background: var(--color-white);
@@ -238,7 +211,7 @@
             font-style: italic;
             color: var(--color-slate-900);
             word-wrap: break-word;
-            line-height: 1.2;
+            line-height: 1.1;
         }
 
         .dialogue-lang {
@@ -341,7 +314,7 @@
 
         .correction-content {
             font-size: 13px;
-            line-height: 1.2;
+            line-height: 1.1;
             color: var(--color-slate-900);
         }
 
@@ -423,12 +396,12 @@
 <body>
     <div class="container">
         <div class="header" id="appHeader">
-            <div class="header-content">
-                <h1>🗣️ Langue Learning</h1>
+            <h1>🗣️ Langue Learning</h1>
 
-                <div class="controls">
+            <div class="controls">
+                <div class="controls-row">
                     <div class="control-group">
-                        <label>Langue cible</label>
+                        <label>Langue</label>
                         <select id="targetLang">
                             <option value="el-GR">Grec (Ελληνικά)</option>
                             <option value="es-ES">Espagnol (Español)</option>
@@ -448,32 +421,29 @@
                             <option value="B2">Bon B2</option>
                         </select>
                     </div>
-
-                    <div class="control-group">
-                        <label>Sujet</label>
-                        <select id="topic">
-                            <option value="presentation">Présentation</option>
-                            <option value="magasin">Au magasin</option>
-                            <option value="dentiste">Chez le dentiste</option>
-                            <option value="voyage">Voyage & Transport</option>
-                            <option value="sante">Santé & Docteur</option>
-                            <option value="loisirs">Loisirs & Hobbies</option>
-                            <option value="restaurant">Restaurant & Café</option>
-                            <option value="travail">Travail & Bureau</option>
-                            <option value="famille">Famille & Amis</option>
-                            <option value="culture">Culture & Société</option>
-                            <option value="animaux">Animaux & Domestiques</option>
-                        </select>
-                    </div>
-
-                    <button class="btn btn-primary" id="generateBtn">
-                        ✨ Générer Dialogue
-                    </button>
                 </div>
+
+                <div class="control-group" style="width: 100%;">
+                    <label>Sujet</label>
+                    <select id="topic" style="width: 100%;">
+                        <option value="presentation">Présentation</option>
+                        <option value="magasin">Au magasin</option>
+                        <option value="dentiste">Chez le dentiste</option>
+                        <option value="voyage">Voyage & Transport</option>
+                        <option value="sante">Santé & Docteur</option>
+                        <option value="loisirs">Loisirs & Hobbies</option>
+                        <option value="restaurant">Restaurant & Café</option>
+                        <option value="travail">Travail & Bureau</option>
+                        <option value="famille">Famille & Amis</option>
+                        <option value="culture">Culture & Société</option>
+                        <option value="animaux">Animaux & Domestiques</option>
+                    </select>
+                </div>
+
+                <button class="btn btn-primary" id="generateBtn">
+                    ✨ Générer Dialogue
+                </button>
             </div>
-            <button class="header-toggle-btn" id="headerToggle">
-                <span id="toggleText">Masquer réglages</span> &nbsp; <i id="toggleIcon">▲</i>
-            </button>
         </div>
 
         <div class="content">
@@ -729,9 +699,7 @@
             correctCount: document.getElementById('correctCount'),
             totalCount: document.getElementById('totalCount'),
             phoneticDialogue: document.getElementById('phoneticDialogue'),
-            appHeader: document.getElementById('appHeader'),
-            headerToggle: document.getElementById('headerToggle'),
-            toggleText: document.getElementById('toggleText')
+            appHeader: document.getElementById('appHeader')
         };
 
         // Langue cible
@@ -830,11 +798,6 @@
         els.levelSelect.addEventListener('change', (e) => {
             state.level = e.target.value;
             generateDialogue();
-        });
-
-        els.headerToggle.addEventListener('click', () => {
-            const isCollapsed = els.appHeader.classList.toggle('collapsed');
-            els.toggleText.textContent = isCollapsed ? 'Afficher réglages' : 'Masquer réglages';
         });
 
         function autoScroll(el) {
@@ -954,7 +917,6 @@
 
                     if (voice) {
                         utterance.voice = voice;
-                        els.voiceWarning.style.display = 'none';
                         console.log('%c Voix cible : ' + voice.name + ' (' + voice.lang + ')', 'background: #222; color: #bada55');
                     } else {
                         console.error("ERREUR : Aucune voix trouvée pour " + lang);
