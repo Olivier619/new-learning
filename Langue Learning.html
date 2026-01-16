@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#21808d">
+    <title>Langue Learning - Apprendre les Langues</title>
+    <style>
+        :root {
+            --color-white: rgba(255, 255, 255, 1);
+            --color-cream-50: rgba(252, 252, 249, 1);
+            --color-gray-200: rgba(245, 245, 245, 1);
+            --color-gray-300: rgba(167, 169, 169, 1);
+            --color-slate-500: rgba(98, 108, 113, 1);
+            --color-slate-900: rgba(19, 52, 59, 1);
+            --color-teal-300: rgba(50, 184, 198, 1);
+            --color-teal-400: rgba(45, 166, 178, 1);
+            --color-teal-500: rgba(33, 128, 141, 1);
+            --color-red-400: rgba(255, 84, 89, 1);
+            --color-green-500: rgba(34, 197, 94, 1);
+
+            --font-family-base: "Segoe UI", Roboto, sans-serif;
+            --font-size-base: 14px;
+            --font-size-lg: 16px;
+            --font-size-xl: 18px;
+            --space-8: 8px;
+            --space-16: 16px;
+            --space-20: 20px;
+            --radius-base: 8px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: var(--font-family-base);
+            background: linear-gradient(135deg, #f5f9f9 0%, #e8f4f5 100%);
+            min-height: 100vh;
+            color: var(--color-slate-900);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: var(--space-20);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: var(--space-20);
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-16);
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 32px;
+            color: var(--color-teal-500);
+        }
+
+        .controls {
+            display: flex;
+            gap: var(--space-16);
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: end;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-8);
+        }
+
+        .control-group label {
+            font-weight: 600;
+            font-size: 12px;
+            color: var(--color-slate-500);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        select,
+        input {
+            padding: var(--space-8) var(--space-16);
+            border: 2px solid var(--color-gray-200);
+            border-radius: var(--radius-base);
+            font-size: var(--font-size-base);
+            background: var(--color-white);
+            cursor: pointer;
+            transition: border-color 0.2s;
+        }
+
+        select:focus,
+        input:focus {
+            outline: none;
+            border-color: var(--color-teal-500);
+            box-shadow: 0 0 0 3px rgba(33, 128, 141, 0.1);
+        }
+
+        .btn {
+            padding: var(--space-8) var(--space-20);
+            border: none;
+            border-radius: var(--radius-base);
+            font-size: var(--font-size-base);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-8);
+        }
+
+        .btn-primary {
+            background: var(--color-teal-500);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--color-teal-400);
+        }
+
+        .btn-secondary {
+            background: var(--color-gray-200);
+            color: var(--color-slate-900);
+        }
+
+        .btn-secondary:hover {
+            background: var(--color-gray-300);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-20);
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                grid-template-columns: 1fr;
+            }
+
+            .header h1 {
+                font-size: 24px;
+            }
+
+            .btn {
+                padding: var(--space-16) var(--space-20);
+                /* Larger touch targets */
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        .card {
+            background: var(--color-white);
+            border-radius: 12px;
+            padding: var(--space-20);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-16);
+        }
+
+        .card h2 {
+            margin: 0;
+            font-size: var(--font-size-xl);
+            color: var(--color-slate-900);
+        }
+
+        .dialogue-box {
+            background: #f0f7f8;
+            padding: var(--space-16);
+            border-radius: var(--radius-base);
+            border-left: 4px solid var(--color-teal-500);
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            font-style: italic;
+            color: var(--color-slate-900);
+            word-wrap: break-word;
+        }
+
+        .dialogue-lang {
+            font-size: 12px;
+            color: var(--color-slate-500);
+            margin-bottom: var(--space-8);
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .audio-controls {
+            display: flex;
+            gap: var(--space-8);
+            flex-wrap: wrap;
+        }
+
+        .btn-icon {
+            padding: var(--space-8) var(--space-16);
+            font-size: 20px;
+        }
+
+        .recorder {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-16);
+        }
+
+        .recorder-status {
+            text-align: center;
+            padding: var(--space-16);
+            border-radius: var(--radius-base);
+            font-weight: 600;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .status-ready {
+            background: #e8f5e9;
+            color: var(--color-green-500);
+        }
+
+        .status-recording {
+            background: #ffe8e8;
+            color: var(--color-red-400);
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.6;
+            }
+        }
+
+        .status-error {
+            background: #ffe8e8;
+            color: var(--color-red-400);
+        }
+
+        .transcript {
+            background: #f9f9f9;
+            padding: var(--space-16);
+            border-radius: var(--radius-base);
+            min-height: 60px;
+            border: 2px dashed var(--color-gray-200);
+            word-wrap: break-word;
+        }
+
+        .transcript-empty {
+            color: var(--color-gray-300);
+            font-style: italic;
+        }
+
+        .correction-box {
+            background: #f0f7f8;
+            padding: var(--space-16);
+            border-radius: var(--radius-base);
+            border-left: 4px solid var(--color-teal-500);
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+        }
+
+        .correction-box.error {
+            border-left-color: var(--color-red-400);
+            background: #ffe8e8;
+        }
+
+        .correction-box.success {
+            border-left-color: var(--color-green-500);
+            background: #e8f5e9;
+        }
+
+        .correction-content {
+            font-size: 13px;
+            line-height: 1.6;
+            color: var(--color-slate-900);
+        }
+
+        .correction-content strong {
+            color: var(--color-teal-500);
+        }
+
+        .correction-box.error strong {
+            color: var(--color-red-400);
+        }
+
+        .correction-box.success strong {
+            color: var(--color-green-500);
+        }
+
+        .divider {
+            height: 2px;
+            background: var(--color-gray-200);
+            margin: var(--space-8) 0;
+        }
+
+        .loading {
+            text-align: center;
+            color: var(--color-slate-500);
+            font-size: 12px;
+        }
+
+        .loading::after {
+            content: "...";
+            animation: dots 1.5s steps(3, end) infinite;
+        }
+
+        @keyframes dots {
+
+            0%,
+            20% {
+                content: ".";
+            }
+
+            40% {
+                content: "..";
+            }
+
+            60%,
+            100% {
+                content: "...";
+            }
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-16);
+            background: var(--color-gray-200);
+            padding: var(--space-16);
+            border-radius: var(--radius-base);
+            margin-top: var(--space-16);
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--color-teal-500);
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--color-slate-500);
+            margin-top: var(--space-8);
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🗣️ Langue Learning</h1>
+
+            <div class="controls">
+                <div class="control-group">
+                    <label>Langue cible</label>
+                    <select id="targetLang">
+                        <option value="el-GR">Grec (Ελληνικά)</option>
+                        <option value="es-ES">Espagnol (Español)</option>
+                        <option value="de-DE">Allemand (Deutsch)</option>
+                        <option value="it-IT">Italien (Italiano)</option>
+                        <option value="pt-PT">Portugais (Português)</option>
+                        <option value="ja-JP">Japonais (日本語)</option>
+                    </select>
+                </div>
+
+                <div class="control-group">
+                    <label>Niveau</label>
+                    <select id="level">
+                        <option value="A1">Débutant A1</option>
+                        <option value="A2">Élémentaire A2</option>
+                        <option value="B1">Intermédiaire B1</option>
+                        <option value="B2">Bon B2</option>
+                    </select>
+                </div>
+
+                <button class="btn btn-primary" id="generateBtn">
+                    ✨ Générer Dialogue
+                </button>
+            </div>
+        </div>
+
+        <div class="content">
+            <!-- Panneau gauche: Dialogue -->
+            <div class="card">
+                <h2>📚 Dialogue</h2>
+
+                <div>
+                    <div class="dialogue-lang">Français (Texte)</div>
+                    <div class="dialogue-box" id="frenchDialogue">
+                        Cliquez sur "Générer Dialogue" pour commencer
+                    </div>
+                </div>
+
+                <div class="divider"></div>
+
+                <div>
+                    <div class="dialogue-lang" id="targetLangLabel">Grec (À répéter)</div>
+                    <div class="dialogue-box" id="targetDialogue">
+                        En attente de génération...
+                    </div>
+                    <div class="audio-controls">
+                        <button class="btn btn-secondary" id="speakTarget" style="flex: 1;">
+                            🔊 Écouter le Grec
+                        </button>
+                        <button class="btn btn-secondary" id="toggleTranslation">
+                            👁️ Masquer
+                        </button>
+                    </div>
+                </div>
+
+                <div class="stats">
+                    <div class="stat">
+                        <div class="stat-value" id="correctCount">0</div>
+                        <div class="stat-label">Correctes</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value" id="totalCount">0</div>
+                        <div class="stat-label">Totales</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Panneau droit: Enregistrement et Correction -->
+            <div class="card">
+                <h2>🎤 Enregistrement & Correction</h2>
+
+                <div class="recorder">
+                    <div class="recorder-status status-ready" id="recorderStatus">
+                        Prêt à enregistrer
+                    </div>
+
+                    <div style="display: flex; gap: var(--space-8); flex-wrap: wrap;">
+                        <button class="btn btn-primary" id="recordBtn" style="flex: 1;">
+                            ⏺️ Enregistrer
+                        </button>
+                        <button class="btn btn-secondary" id="stopBtn" disabled style="flex: 1;">
+                            ⏹️ Arrêter
+                        </button>
+                    </div>
+
+                    <div class="divider"></div>
+
+                    <div>
+                        <div style="font-weight: 600; margin-bottom: var(--space-8);">Votre réponse:</div>
+                        <div class="transcript" id="transcript">
+                            <span class="transcript-empty">Aucun enregistrement</span>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary" id="checkBtn" style="width: 100%;" disabled>
+                        ✅ Vérifier la Réponse
+                    </button>
+
+                    <div class="divider" style="display: none;" id="correctionDivider"></div>
+
+                    <div id="correctionContainer" style="display: none;">
+                        <div style="font-weight: 600; margin-bottom: var(--space-8);">Correction:</div>
+                        <div class="correction-box" id="correctionBox">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configuration
+        const DIALOGUES = {
+            A1: {
+                fr: [
+                    "Bonjour, comment allez-vous?",
+                    "Je m'appelle Marie. Et vous?",
+                    "Quelle heure est-il?",
+                    "Où habitez-vous?",
+                    "Aimez-vous le café?",
+                    "C'est votre premier jour?",
+                    "Vous venez d'où?",
+                    "Que faites-vous dans la vie?"
+                ],
+                'el-GR': [
+                    "Καλημέρα, πώς είστε;",
+                    "Με λένε Μαρία. Εσάς;",
+                    "Τι ώρα είναι;",
+                    "Πού μένετε;",
+                    "Σας αρέσει ο καφές;",
+                    "Είναι η πρώτη σας μέρα;",
+                    "Από πού έρχεστε;",
+                    "Τι κάνετε στη ζωή;"
+                ],
+                'es-ES': [
+                    "Hola, ¿cómo estás?",
+                    "Me llamo María. ¿Y tú?",
+                    "¿Qué hora es?",
+                    "¿Dónde vives?",
+                    "¿Te gusta el café?",
+                    "¿Es tu premier día?",
+                    "¿De dónde vienes?",
+                    "¿A qué te dedicas?"
+                ],
+                'de-DE': [
+                    "Hallo, wie geht es Ihnen?",
+                    "Ich heiße Maria. Und Sie?",
+                    "Wie spät ist es?",
+                    "Wo wohnen Sie?",
+                    "Mögen Sie Kaffee?",
+                    "Ist das Ihr erster Tag?",
+                    "Woher kommen Sie?",
+                    "Was machen Sie beruflich?"
+                ],
+                'it-IT': [
+                    "Buongiorno, come sta?",
+                    "Mi chiamo Maria. E lei?",
+                    "Che ore sono?",
+                    "Dove abita?",
+                    "Le piace il caffè?",
+                    "È il suo primo giorno?",
+                    "Da dove viene?",
+                    "Che lavoro fa?"
+                ],
+                'pt-PT': [
+                    "Olá, como está?",
+                    "Chamo-me Maria. E você?",
+                    "Que horas são?",
+                    "Onde mora?",
+                    "Gosta de café?",
+                    "É o seu primeiro dia?",
+                    "De onde vem?",
+                    "O que faz na vida?"
+                ],
+                'ja-JP': [
+                    "こんにちは、元気ですか？",
+                    "私はマリアです。あなたは？",
+                    "何時ですか？",
+                    "どこに住んでいますか？",
+                    "コーヒーは好きですか？",
+                    "今日は初日ですか？",
+                    "どこから来ましたか？",
+                    "お仕事は何ですか？"
+                ]
+            },
+            A2: {
+                fr: [
+                    "Parlez-vous d'autres langues?",
+                    "Je viens de Paris. C'est une belle ville.",
+                    "Qu'avez-vous mangé ce matin?",
+                    "Comment s'est passée votre journée?",
+                    "Vous travaillez depuis longtemps ici?",
+                    "Qu'est-ce que vous aimeriez faire ce weekend?",
+                    "Vous connaissez ce restaurant?",
+                    "Pourquoi avez-vous décidé d'apprendre cette langue?"
+                ],
+                'el-GR': [
+                    "Μιλάτε άλλες γλώσσες;",
+                    "Έρχομαι από το Παρίσι. Είναι μια όμορφη πόλη.",
+                    "Τι φάγατε το πρωί;",
+                    "Πώς ήταν η μέρα σας;",
+                    "Δουλεύετε εδώ εδώ και πολύ;",
+                    "Τι θα θέλατε να κάνετε αυτό το Σαββατοκύριακο;",
+                    "Γνωρίζετε αυτό το εστιατόριο;",
+                    "Γιατί αποφασίσατε να μάθετε αυτή τη γλώσσα!"
+                ],
+                'es-ES': [
+                    "¿Hablas otros idiomas?",
+                    "Vengo de París. Es una ciudad hermosa.",
+                    "¿Qué comiste esta mañana?",
+                    "¿Cómo estuvo tu día?",
+                    "¿Llevas mucho tiempo trabajando aquí?",
+                    "¿Qué te gustaría hacer este fin de semana?",
+                    "¿Conoces este restaurante?",
+                    "¿Por qué decidiste aprender este idioma?"
+                ],
+                'de-DE': [
+                    "Sprechen Sie andere Sprachen?",
+                    "Ich komme aus Paris. Es ist eine schöne Stadt.",
+                    "Was haben Sie heute Morgen gegessen?",
+                    "Wie war Ihr Tag?",
+                    "Arbeiten Sie schon lange hier?",
+                    "Was möchten Sie dieses Wochenende machen?",
+                    "Kennen Sie dieses Restaurant?",
+                    "Warum haben Sie sich entschieden, diese Sprache zu lernen?"
+                ],
+                'it-IT': [
+                    "Parla altre lingue?",
+                    "Vengo da Parigi. È una bella città.",
+                    "Cosa ha mangiato stamattina?",
+                    "Com'è andata la sua giornata?",
+                    "Lavora qui da molto tempo?",
+                    "Cosa le piacerebbe fare questo fine settimana?",
+                    "Conosce questo ristorante?",
+                    "Perché ha deciso di imparare questa lingua?"
+                ],
+                'pt-PT': [
+                    "Fala outras línguas?",
+                    "Venho de Paris. É une cidade bonita.",
+                    "O que comeu esta manhã?",
+                    "Como correu o seu dia?",
+                    "Trabalha aqui há muito tempo?",
+                    "O que gostaria de faire este fim de semana?",
+                    "Conhece este restaurante?",
+                    "Porque decidiu aprender esta língua?"
+                ],
+                'ja-JP': [
+                    "他の言語を話せますか？",
+                    "パリから来ました。美しい街です。",
+                    "今朝は何を食べましたか？",
+                    "今日はどんな一日でしたか？",
+                    "ここで長く働いていますか？",
+                    "今週末は何をしたいですか？",
+                    "このレストランを知っていますか？",
+                    "なぜこの言語を学ぼうと思ったのですか？"
+                ]
+            },
+            B1: {
+                fr: [
+                    "Pouvez-vous me donner votre avis sur ce projet?",
+                    "Comment envisagez-vous votre avenir professionnel?",
+                    "Quels sont vos principaux défis actuellement?",
+                    "Pensez-vous que l'éducation devrait être gratuite?",
+                    "Comment géreriez-vous cette situation difficile?",
+                    "Quelles sont les différences culturelles que vous avez observées?",
+                    "Que signifie pour vous réussir dans la vie?",
+                    "Comment pourrait-on résoudre ce problème?"
+                ],
+                'el-GR': [
+                    "Μπορείτε να μου δώσετε τη γνώμη σας για αυτό το έργο;",
+                    "Πώς φαντάζεστε το επαγγελματικό σας μέλλον;",
+                    "Ποιες είναι οι κύριες προκλήσεις σας αυτή τη στιγμή;",
+                    "Νομίζετε ότι η εκπαίδευση θα έπρεπε να είναι δωρεάν;",
+                    "Πώς θα χειριζόσασταν αυτήν τη δύσκολη κατάσταση;",
+                    "Ποιες είναι οι πολιτισμικές διαφορές που παρατηρήσατε;",
+                    "Τι σημαίνει για εσάς η επιτυχία στη ζωή;",
+                    "Πώς θα μπορούσε κανείς να λύσει αυτό το πρόβλημα;"
+                ],
+                'es-ES': [
+                    "¿Puede darme su opinión sobre este proyecto?",
+                    "¿Cómo imagina su futuro profesional?",
+                    "¿Cuáles son sus principales desafíos actualmente?",
+                    "¿Cree que la educación debería ser gratuita?",
+                    "¿Cómo manejaría esta situación difícil?",
+                    "¿Qué diferencias culturales ha observado?",
+                    "¿Qué significa para usted tener éxito en la vida?",
+                    "¿Cómo se podría resolver este problema?"
+                ],
+                'de-DE': [
+                    "Können Sie mir Ihre Meinung zu diesem Projekt sagen?",
+                    "Wie stellen Sie sich Ihre berufliche Zukunft vor?",
+                    "Was sind momentan Ihre größten Herausforderungen?",
+                    "Finden Sie, dass Bildung kostenlos sein sollte?",
+                    "Wie würden Sie mit dieser schwierigen Situation umgehen?",
+                    "Welche kulturellen Unterschiede haben Sie bemerkt?",
+                    "Was bedeutet Erfolg im Leben für Sie?",
+                    "Wie könnte man dieses Problem lösen?"
+                ],
+                'it-IT': [
+                    "Può darmi il suo parere su questo progetto?",
+                    "Come vede il suo futuro professionale?",
+                    "Quali sono le sue sfide principali al momento?",
+                    "Pensa che l'istruzione dovrebbe essere gratuita?",
+                    "Come gestirebbe questa situazione difficile?",
+                    "Quali sono le differenze culturali che ha osservato?",
+                    "Cosa significa per lei avere successo nella vita?",
+                    "Come si potrebbe risolvere questo problema?"
+                ],
+                'pt-PT': [
+                    "Pode dar-me a sua opinião sobre este projeto?",
+                    "Como imagina o seu futuro profissional?",
+                    "Quais são os seus principais desafios atualmente?",
+                    "Acha que a educação deveria ser gratuite?",
+                    "Como lidaria com esta situação difícil?",
+                    "Que diferenças culturais observou?",
+                    "O que significa para si ter sucesso na vida?",
+                    "Como se poderia resolver este problema?"
+                ],
+                'ja-JP': [
+                    "このプロジェクトについて意見を聞かせていただけますか？",
+                    "あなたの将来の仕事についてどう考えていますか？",
+                    "現在の主な課題は何ですか？",
+                    "教育は無料であるべきだと思いますか？",
+                    "この困難な状況にどう対処しますか？",
+                    "どのような文化の違いに気づきましたか？",
+                    "あなたにとって人生の成功とは何ですか？",
+                    "この問題を解決するにはどうすればよいでしょうか？"
+                ]
+            },
+            B2: {
+                fr: [
+                    "Selon vous, quels sont les enjeux majeurs de notre époque?",
+                    "Comment analysez-vous l'impact de la technologie sur la société?",
+                    "Pourriez-vous me développer votre point de vue sur cette question?",
+                    "Quelles implications cela aurait-il pour l'économie globale?",
+                    "Comment compareriez-vous les différentes approches de ce sujet?",
+                    "Qu'est-ce qui justifierait un changement de politique à ce sujet?",
+                    "Pouvez-vous anticiper les conséquences à long terme?",
+                    "Comment pourrait-on améliorer cette situation de manière significative?"
+                ],
+                'el-GR': [
+                    "Κατά τη γνώμη σας, ποιες είναι οι κύριες προκλήσεις της εποχής μας;",
+                    "Πώς αναλύετε την επίδραση της τεχνολογίας στην κοινωνία;",
+                    "Θα μπορούσατε να αναπτύξετε τη άποψή σας για αυτό το ζήτημα;",
+                    "Ποιες θα ήταν οι επιπτώσεις για την παγκόσμια οικονομία;",
+                    "Πώς θα συγκρίνατε τις διαφορετικές προσεγγίσεις του θέματος;",
+                    "Τι θα δικαιολογούσε μια αλλαγή πολιτικής στο θέμα αυτό;",
+                    "Μπορείτε να προβλέψετε τις μακροπρόθεσμες συνέπειες;",
+                    "Πώς θα μπορούσε κανείς να βελτιώσει σημαντικά αυτήν την κατάσταση;"
+                ],
+                'es-ES': [
+                    "En su opinión, ¿cuáles son los principales desafíos de nuestra época?",
+                    "¿Cómo analiza el impacto de la tecnología en la sociedad?",
+                    "¿Podría explicarme su punto de vista sobre esta cuestión?",
+                    "¿Qué implicaciones tendría esto para la economía global?",
+                    "¿Cómo compararía los diferentes enfoques sobre este tema?",
+                    "¿Qué justificaría un cambio de política al respecto?",
+                    "¿Puede anticipar las consecuencias a largo plazo?",
+                    "¿Cómo se pourrait améliorer ce problème de manière significative?"
+                ],
+                'de-DE': [
+                    "Was sind Ihrer Meinung nach die größten Herausforderungen unserer Zeit?",
+                    "Wie analysieren Sie den Einfluss der Technologie auf die Gesellschaft?",
+                    "Könnten Sie Ihren Standpunkt zu diesem Thema näher erläutern?",
+                    "Welche Auswirkungen hätte dies auf die Weltwirtschaft?",
+                    "Wie würden Sie die verschiedenen Ansätze zu diesem Thema vergleichen?",
+                    "Was würde einen Politikwechsel in diesem Bereich rechtfertigen?",
+                    "Können Sie die langfristigen Folgen absehen?",
+                    "Wie könnte man diese Situation signifikant verbessern?"
+                ],
+                'it-IT': [
+                    "Secondo lei, quali sont le sfide principali della nostra epoca?",
+                    "Come analizza l'impatto della tecnologia sulla società?",
+                    "Potrebbe approfondire il suo punto di vista su questa questione?",
+                    "Quali implicazioni avrebbe per l'economia globale?",
+                    "Come paragonerebbe i diversi approcci a questo argomento?",
+                    "Cosa giustificherebbe un changement de politique in merito?",
+                    "Può anticipare le conseguenze a lungo termine?",
+                    "Come si pourrait migliorare questa situazione in modo significativo?"
+                ],
+                'pt-PT': [
+                    "Na sua opinião, quais são os principais desafios da nossa época?",
+                    "Como analisa o impacto da tecnologia na sociedade?",
+                    "Poderia desenvolver o seu ponto de vista sobre esta questão?",
+                    "Que implicações teria isso para a economia global?",
+                    "Como compararia as diferentes abordagens a este assunto?",
+                    "O que justificaria uma mudança de política sobre este tema?",
+                    "Pode antecipar as consequências a longo prazo?",
+                    "Como se poderia melhorar esta situação de forma significativa?"
+                ],
+                'ja-JP': [
+                    "現代の主要な課題は何だと思いますか？",
+                    "テクノロジーが社会に与える影響をどう分析しますか？",
+                    "この問題についてのあなたの見解を詳しく教えていただけますか？",
+                    "これが世界経済にどのような影響を与えるでしょうか？",
+                    "このテーマに対する異なるアプローチをどのように比較しますか？",
+                    "この件に関して政策変更を正当化するものは何ですか？",
+                    "長期的な影響を予測できますか？",
+                    "この状況を大幅に改善するにはどうすればよいでしょうか？"
+                ]
+            }
+        };
+
+        // État global
+        let state = {
+            targetLang: 'el-GR',
+            level: 'A1',
+            currentFrench: '',
+            currentTarget: '',
+            transcript: '',
+            mediaRecorder: null,
+            audioChunks: [],
+            correctCount: 0,
+            totalCount: 0,
+            showTranslation: true,
+            isRecording: false
+        };
+
+        // Éléments DOM
+        const els = {
+            targetLangSelect: document.getElementById('targetLang'),
+            levelSelect: document.getElementById('level'),
+            generateBtn: document.getElementById('generateBtn'),
+            frenchDialogue: document.getElementById('frenchDialogue'),
+            targetDialogue: document.getElementById('targetDialogue'),
+            targetLangLabel: document.getElementById('targetLangLabel'),
+            speakTarget: document.getElementById('speakTarget'),
+            toggleTranslation: document.getElementById('toggleTranslation'),
+            recordBtn: document.getElementById('recordBtn'),
+            stopBtn: document.getElementById('stopBtn'),
+            transcript: document.getElementById('transcript'),
+            checkBtn: document.getElementById('checkBtn'),
+            recorderStatus: document.getElementById('recorderStatus'),
+            correctionBox: document.getElementById('correctionBox'),
+            correctionContainer: document.getElementById('correctionContainer'),
+            correctionDivider: document.getElementById('correctionDivider'),
+            correctCount: document.getElementById('correctCount'),
+            totalCount: document.getElementById('totalCount')
+        };
+
+        // Langue cible
+        const langNames = {
+            'el-GR': 'Grec',
+            'es-ES': 'Espagnol',
+            'de-DE': 'Allemand',
+            'it-IT': 'Italien',
+            'pt-PT': 'Portugais',
+            'ja-JP': 'Japonais'
+        };
+
+        // Initialiser Web Speech API
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition;
+        if (!SpeechRecognition) {
+            console.error("Speech Recognition non supporté");
+        }
+
+        const recognition = SpeechRecognition ? new SpeechRecognition() : null;
+        if (recognition) {
+            recognition.continuous = false;
+            recognition.interimResults = false;
+            recognition.lang = state.targetLang;
+
+            recognition.onstart = () => {
+                console.log('🎤 Reconnaissance vocale démarrée (onstart)');
+                state.isRecording = true;
+                els.recordBtn.disabled = true;
+                els.stopBtn.disabled = false;
+                els.recorderStatus.textContent = '🔴 Enregistrement en cours...';
+                els.recorderStatus.className = 'recorder-status status-recording';
+                els.checkBtn.disabled = true;
+            };
+
+            recognition.onresult = (event) => {
+                state.transcript = Array.from(event.results)
+                    .map(result => result[0].transcript)
+                    .join('');
+                updateTranscript();
+                console.log('Résultat:', state.transcript);
+            };
+
+            recognition.onerror = (event) => {
+                console.error('Erreur reconnaissance:', event.error);
+                let errorMsg = event.error;
+                if (event.error === 'no-speech') {
+                    errorMsg = 'Pas de son détecté. Parlez plus fort!';
+                } else if (event.error === 'network') {
+                    errorMsg = 'Erreur réseau. Vérifiez votre connexion.';
+                } else if (event.error === 'not-allowed') {
+                    errorMsg = 'Accès micro refusé. Vérifiez vos paramètres.';
+                } else if (event.error === 'service-not-allowed') {
+                    errorMsg = 'Service non autorisé. (Besoin de HTTPS sur mobile?)';
+                }
+                els.recorderStatus.textContent = `⚠️ ${errorMsg}`;
+                els.recorderStatus.className = 'recorder-status status-error';
+                state.isRecording = false;
+                els.recordBtn.disabled = false;
+                els.stopBtn.disabled = true;
+            };
+
+            recognition.onend = () => {
+                state.isRecording = false;
+                els.recordBtn.disabled = false;
+                els.stopBtn.disabled = true;
+                els.recorderStatus.textContent = 'Prêt à enregistrer';
+                els.recorderStatus.className = 'recorder-status status-ready';
+                els.checkBtn.disabled = state.transcript === '';
+            };
+        }
+
+        // Événements
+        els.generateBtn.addEventListener('click', generateDialogue);
+        els.speakTarget.addEventListener('click', () => {
+            speakText(state.currentTarget, state.targetLang);
+        });
+        els.toggleTranslation.addEventListener('click', toggleTranslation);
+        els.recordBtn.addEventListener('click', startRecording);
+        els.stopBtn.addEventListener('click', stopRecording);
+        els.checkBtn.addEventListener('click', checkAnswer);
+        els.targetLangSelect.addEventListener('change', (e) => {
+            state.targetLang = e.target.value;
+            if (recognition) recognition.lang = state.targetLang;
+            els.targetLangLabel.textContent = langNames[state.targetLang];
+            generateDialogue();
+        });
+        els.levelSelect.addEventListener('change', (e) => {
+            state.level = e.target.value;
+            generateDialogue();
+        });
+
+        function generateDialogue() {
+            const dialogues = DIALOGUES[state.level].fr;
+            state.currentFrench = dialogues[Math.floor(Math.random() * dialogues.length)];
+            state.totalCount++;
+            els.totalCount.textContent = state.totalCount;
+
+            els.frenchDialogue.textContent = state.currentFrench;
+            generateTranslation();
+
+            state.transcript = '';
+            els.transcript.innerHTML = '<span class="transcript-empty">Aucun enregistrement</span>';
+            els.correctionContainer.style.display = 'none';
+            els.correctionDivider.style.display = 'none';
+            els.checkBtn.disabled = true;
+            els.recordBtn.disabled = false;
+
+            setTimeout(() => {
+                speakText(state.currentTarget, state.targetLang);
+            }, 1000);
+        }
+
+        function generateTranslation() {
+            const dialogues = DIALOGUES[state.level];
+            const frIndex = dialogues.fr.indexOf(state.currentFrench);
+            if (frIndex !== -1 && dialogues[state.targetLang]) {
+                state.currentTarget = dialogues[state.targetLang][frIndex];
+            } else {
+                state.currentTarget = '(Traduction non disponible)';
+            }
+            els.targetDialogue.textContent = state.showTranslation ? state.currentTarget : '???';
+        }
+
+        function startRecording() {
+            console.log('Tentative de démarrage de l\'enregistrement...');
+            if (!recognition) {
+                alert("La reconnaissance vocale n'est pas supportée par ce navigateur ou nécessite HTTPS.");
+                return;
+            }
+
+            if (state.isRecording) return;
+
+            state.transcript = '';
+            updateTranscript();
+            recognition.lang = state.targetLang;
+            try {
+                recognition.start();
+            } catch (err) {
+                console.error("Erreur start recording:", err);
+                state.isRecording = false;
+                els.recordBtn.disabled = false;
+            }
+        }
+
+        function stopRecording() {
+            if (recognition) recognition.stop();
+        }
+
+        function updateTranscript() {
+            if (state.transcript) {
+                els.transcript.textContent = state.transcript;
+            } else {
+                els.transcript.innerHTML = '<span class="transcript-empty">Aucun enregistrement</span>';
+            }
+        }
+
+        function speakText(text, lang) {
+            if (!text || text === '???' || text.includes('Traduction non disponible')) return;
+
+            function speak() {
+                window.speechSynthesis.cancel();
+
+                setTimeout(() => {
+                    const utterance = new SpeechSynthesisUtterance(text);
+                    const voices = window.speechSynthesis.getVoices();
+                    const targetLangPrefix = lang.split('-')[0].toLowerCase();
+                    let voice = voices.find(v => v.lang === lang) ||
+                        voices.find(v => v.lang.toLowerCase().startsWith(targetLangPrefix));
+
+                    if (voice) {
+                        utterance.voice = voice;
+                        console.log('Voix sélectionnée:', voice.name, '(', voice.lang, ')');
+                    }
+
+                    if (window.speechSynthesis.paused) {
+                        window.speechSynthesis.resume();
+                    }
+
+                    utterance.lang = lang;
+                    utterance.rate = 0.85;
+                    utterance.pitch = 1.0;
+                    utterance.volume = 1.0;
+
+                    utterance.onstart = () => {
+                        console.log('Lecture commencée pour:', text);
+                        els.speakTarget.style.background = 'var(--color-teal-300)';
+                        els.speakTarget.textContent = '🔊 Lecture en cours...';
+                    };
+
+                    utterance.onend = () => {
+                        console.log('Lecture terminée.');
+                        els.speakTarget.style.background = '';
+                        els.speakTarget.textContent = `🔊 Écouter le ${langNames[state.targetLang] || 'Langue'}`;
+                    };
+
+                    utterance.onerror = (e) => {
+                        console.error('Erreur synthèse vocale:', e);
+                        els.speakTarget.style.background = '';
+                        els.speakTarget.textContent = '⚠️ Erreur Audio';
+                    };
+
+                    window.speechSynthesis.speak(utterance);
+                }, 100);
+            }
+
+            if (window.speechSynthesis.getVoices().length > 0) {
+                speak();
+            } else {
+                window.speechSynthesis.onvoiceschanged = () => {
+                    speak();
+                    window.speechSynthesis.onvoiceschanged = null;
+                };
+                setTimeout(() => { if (window.speechSynthesis.getVoices().length === 0) speak(); }, 500);
+            }
+        }
+
+        function toggleTranslation() {
+            state.showTranslation = !state.showTranslation;
+            els.targetDialogue.textContent = state.showTranslation ? state.currentTarget : '???';
+            els.toggleTranslation.textContent = state.showTranslation ? '👁️ Masquer' : '👁️ Voir';
+        }
+
+        function checkAnswer() {
+            if (!state.transcript) return;
+            els.correctionDivider.style.display = 'block';
+            els.correctionContainer.style.display = 'block';
+
+            const similarity = calculateSimilarity(state.transcript.toLowerCase(), state.currentTarget.toLowerCase());
+
+            if (similarity > 0.6) {
+                els.correctionBox.className = 'correction-box success correction-content';
+                els.correctionBox.innerHTML = `<strong>✅ Excellent!</strong> Votre prononciation est très proche de la cible.`;
+                state.correctCount++;
+                els.correctCount.textContent = state.correctCount;
+            } else {
+                els.correctionBox.className = 'correction-box error correction-content';
+                els.correctionBox.innerHTML = `<strong>Cible:</strong> ${state.currentTarget}<br><strong>Votre réponse:</strong> ${state.transcript}`;
+            }
+        }
+
+        function calculateSimilarity(str1, str2) {
+            const longer = str1.length > str2.length ? str1 : str2;
+            const shorter = str1.length > str2.length ? str2 : str1;
+            if (longer.length === 0) return 1.0;
+            const editDistance = getEditDistance(longer, shorter);
+            return (longer.length - editDistance) / longer.length;
+        }
+
+        function getEditDistance(s1, s2) {
+            const costs = [];
+            for (let i = 0; i <= s1.length; i++) {
+                let lastValue = i;
+                for (let j = 0; j <= s2.length; j++) {
+                    if (i === 0) {
+                        costs[j] = j;
+                    } else if (j > 0) {
+                        let newValue = costs[j - 1];
+                        if (s1.charAt(i - 1) !== s2.charAt(j - 1)) {
+                            newValue = Math.min(Math.min(newValue, lastValue), costs[j]) + 1;
+                        }
+                        costs[j - 1] = lastValue;
+                        lastValue = newValue;
+                    }
+                }
+                if (i > 0) costs[s2.length] = lastValue;
+            }
+            return costs[s2.length];
+        }
+
+        // Initialiser
+        els.targetLangLabel.textContent = langNames[state.targetLang];
+    </script>
+</body>
+
+</html>
