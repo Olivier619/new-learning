@@ -489,7 +489,19 @@
         <div class="content">
             <!-- Panneau gauche: Dialogue -->
             <div class="card">
-                <h2>📚 Dialogue</h2>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                    <h2 style="margin: 0;">📚 Dialogue</h2>
+                    <div style="display: flex; gap: 6px;">
+                        <button class="btn btn-secondary" id="stopSessionBtn" title="Arrêter"
+                            style="padding: 4px 8px; font-size: 12px;">⏹️</button>
+                        <button class="btn btn-primary" id="goSessionBtn" title="Go"
+                            style="padding: 4px 8px; font-size: 12px;">▶️</button>
+                        <button class="btn btn-secondary" id="saveSessionBtn" title="Sauvegarder"
+                            style="padding: 4px 8px; font-size: 12px;">💾</button>
+                        <button class="btn btn-secondary" id="loadSessionBtn" title="Reprendre"
+                            style="padding: 4px 8px; font-size: 12px;">📂</button>
+                    </div>
+                </div>
 
                 <div>
                     <div class="dialogue-lang">Français (Texte)</div>
@@ -533,16 +545,7 @@
 
             <!-- Panneau droit: Enregistrement et Correction -->
             <div class="card">
-                <div class="session-controls"
-                    style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 16px;">
-                    <button class="btn btn-secondary" id="stopSessionBtn" title="Arrêter la session">⏹️ Stop</button>
-                    <button class="btn btn-primary" id="goSessionBtn" title="Démarrer/Reprendre la session">▶️
-                        Go</button>
-                    <button class="btn btn-secondary" id="saveSessionBtn" title="Sauvegarder la progression">💾
-                        Sauver</button>
-                    <button class="btn btn-secondary" id="loadSessionBtn" title="Reprendre une sauvegarde">📂
-                        Reprendre</button>
-                </div>
+
                 <h2>🎤 Enregistrement & Correction</h2>
 
                 <div class="recorder">
