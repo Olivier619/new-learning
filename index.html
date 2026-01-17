@@ -533,6 +533,16 @@
 
             <!-- Panneau droit: Enregistrement et Correction -->
             <div class="card">
+                <div class="session-controls"
+                    style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 16px;">
+                    <button class="btn btn-secondary" id="stopSessionBtn" title="Arrêter la session">⏹️ Stop</button>
+                    <button class="btn btn-primary" id="goSessionBtn" title="Démarrer/Reprendre la session">▶️
+                        Go</button>
+                    <button class="btn btn-secondary" id="saveSessionBtn" title="Sauvegarder la progression">💾
+                        Sauver</button>
+                    <button class="btn btn-secondary" id="loadSessionBtn" title="Reprendre une sauvegarde">📂
+                        Reprendre</button>
+                </div>
                 <h2>🎤 Enregistrement & Correction</h2>
 
                 <div class="recorder">
@@ -773,7 +783,12 @@
             successRate: document.getElementById('successRate'),
             totalCorrect: document.getElementById('totalCorrect'),
             totalIncorrect: document.getElementById('totalIncorrect'),
-            resetProgress: document.getElementById('resetProgress')
+            totalIncorrect: document.getElementById('totalIncorrect'),
+            resetProgress: document.getElementById('resetProgress'),
+            stopSessionBtn: document.getElementById('stopSessionBtn'),
+            goSessionBtn: document.getElementById('goSessionBtn'),
+            saveSessionBtn: document.getElementById('saveSessionBtn'),
+            loadSessionBtn: document.getElementById('loadSessionBtn')
         };
 
         // Langue cible
@@ -1202,6 +1217,112 @@
                 alert('✅ Statistiques réinitialisées avec succès !');
             }
         }
+
+        // ==================== SESSION CONTROLS ====================
+
+        function stopSession() {
+            state.isPaused = true;
+            if (state.autoNextTimeout) {
+                clearTimeout(state.autoNextTimeout);
+                state.autoNextTimeout = null;
+            }
+            if (state.isRecording && recognition) {
+                recognition.stop();
+            }
+            els.recorderStatus.textContent = '⏸️ Session en pause';
+            els.recorderStatus.className = 'recorder-status';
+            els.stopSessionBtn.disabled = true;
+            els.goSessionBtn.disabled = false;
+        }
+
+        function startSession() {
+            state.isPaused = false;
+            els.stopSessionBtn.disabled = false;
+            els.goSessionBtn.disabled = true;
+            els.recorderStatus.textContent = 'Prêt à enregistrer';
+            els.recorderStatus.className = 'recorder-status status-ready';
+
+            // Si on a déjà un dialogue mais pas d'action, on peut relancer l'enregistrement ou suivant
+            if (state.currentFrench) {
+                // Relance l'autoflow si nécessaire ou juste débloque l'UI
+                // Pour l'instant on laisse l'utilisateur cliquer sur "Enregistrer" ou "Générer"
+            }
+        }
+
+        function saveSession() {
+            try {
+                const sessionData = {
+                    state: state,
+                    timestamp: new Date().toISOString()
+                };
+                localStorage.setItem('greekLearningSession', JSON.stringify(sessionData));
+                alert('💾 Session sauvegardée avec succès !');
+            } catch (e) {
+                console.error('Erreur sauvegarde:', e);
+                alert('Erreur lors de la sauvegarde.');
+            }
+        }
+
+        function loadSession() {
+            try {
+                const saved = localStorage.getItem('greekLearningSession');
+                if (!saved) {
+                    alert('Aucune session sauvegardée trouvée.');
+                    return;
+                }
+                const data = JSON.parse(saved);
+
+                // Fusionner l'état proprement
+                // On garde mediaRecorder et audioChunks à part car non sérialisables
+                const { mediaRecorder, audioChunks, autoNextTimeout, ...serializableState } = data.state;
+
+                state = {
+                    ...state,
+                    ...serializableState,
+                    isRecording: false, // Reset temporaire
+                    autoNextTimeout: null
+                };
+
+                restoreUI();
+                alert('📂 Session chargée !');
+            } catch (e) {
+                console.error('Erreur chargement:', e);
+                alert('Erreur lors du chargement de la session.');
+            }
+        }
+
+        function restoreUI() {
+            // Restaurer les sélecteurs
+            els.targetLangSelect.value = state.targetLang;
+            els.levelSelect.value = state.level;
+            els.topicSelect.value = state.topic;
+            els.targetLangLabel.textContent = langNames[state.targetLang];
+
+            // Restaurer le dialogue
+            els.frenchDialogue.textContent = state.currentFrench || 'Cliquez sur "Générer Dialogue" pour commencer';
+            els.targetDialogue.textContent = state.currentTarget || 'En attente de génération...';
+
+            // Masquer/Afficher traduction selon l'état (si on le stockait, sinon défaut)
+
+            // Restaurer stats
+            updateProgressDisplay();
+            els.totalCount.textContent = state.totalCount || (state.correctCount + state.incorrectCount);
+
+            // Reset boutons
+            els.stopSessionBtn.disabled = false;
+            els.goSessionBtn.disabled = true;
+            els.checkBtn.disabled = true;
+        }
+
+        // Event Listeners pour les contrôles
+        els.stopSessionBtn.addEventListener('click', stopSession);
+        els.goSessionBtn.addEventListener('click', startSession);
+        els.saveSessionBtn.addEventListener('click', saveSession);
+        els.loadSessionBtn.addEventListener('click', loadSession);
+
+        // Initialisation état boutons
+        els.stopSessionBtn.disabled = false;
+        els.goSessionBtn.disabled = true; // On démarre en actif
 
         // ==================== INITIALIZATION ====================
 
